@@ -305,8 +305,8 @@ void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 		if (alt_fire)
 		{
 			// add some slop to the alt-fire direction
-			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
-			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
+			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BOWCASTER_ALT_SPREAD;
+			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BOWCASTER_ALT_SPREAD;
 		}
 		else
 		{
@@ -322,8 +322,8 @@ void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 			else
 			{
 				// add some slop to the main-fire direction
-				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-				angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BOWCASTER_MAIN_SPREAD;
+				angs[YAW] += Q_flrand(-1.0f, 1.0f) * BOWCASTER_MAIN_SPREAD;
 			}
 		}
 	}

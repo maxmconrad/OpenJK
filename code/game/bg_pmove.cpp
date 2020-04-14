@@ -12941,14 +12941,14 @@ static bool PM_DoChargedWeapons( void )
 		break;
 
 	//------------------
-	case WP_BOWCASTER:
+	//case WP_BOWCASTER:
 
 		// main-fire charges the weapon
-		if ( pm->cmd.buttons & BUTTON_ATTACK )
-		{
-			charging = qtrue;
-		}
-		break;
+		//if ( pm->cmd.buttons & BUTTON_ATTACK )
+		//{
+			//charging = qtrue;
+		//}
+		//break;
 
 	//------------------
 	case WP_DEMP2:
@@ -13078,7 +13078,7 @@ static int PM_DoChargingAmmoUsage( int *amount )
 {
 	int count = 0;
 
-	if ( pm->ps->weapon == WP_BOWCASTER && !( pm->cmd.buttons & BUTTON_ALT_ATTACK ))
+	/*if ( pm->ps->weapon == WP_BOWCASTER && !( pm->cmd.buttons & BUTTON_ALT_ATTACK ))
 	{
 		// this code is duplicated ( I know, I know ) in G_weapon.cpp for the bowcaster alt-fire
 		count = ( level.time - pm->ps->weaponChargeTime ) / BOWCASTER_CHARGE_UNIT;
@@ -13122,7 +13122,8 @@ static int PM_DoChargingAmmoUsage( int *amount )
 		// now that count is cool, get the real ammo usage
 		*amount *= count;
 	}
-	else if(  ( pm->ps->weapon == WP_BRYAR_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK )
+	*/
+	/* else */ if(  ( pm->ps->weapon == WP_BRYAR_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK )
 			  || ( pm->ps->weapon == WP_BLASTER_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK ) )
 	{
 		// this code is duplicated ( I know, I know ) in G_weapon.cpp for the bryar alt-fire
@@ -13991,9 +13992,9 @@ static void PM_Weapon( void )
 			// repeater is supposed to do smoke after sustained bursts
 			pm->ps->weaponShotCount++;
 			break;
-		case WP_BOWCASTER:
-			addTime *= (( trueCount < 3 ) ? 0.35f : 1.0f );// if you only did a small charge shot with the bowcaster, use less time between shots
-			break;
+		//case WP_BOWCASTER:
+		//	addTime *= (( trueCount < 3 ) ? 0.35f : 1.0f );// if you only did a small charge shot with the bowcaster, use less time between shots
+		//	break;
 		case WP_THERMAL:
 			if ( pm->gent )
 			{// remove the thermal model if we had it.
