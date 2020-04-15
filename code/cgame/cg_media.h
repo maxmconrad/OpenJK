@@ -338,6 +338,8 @@ typedef struct
 	fxHandle_t	bowcasterShotEffect;
 	fxHandle_t	bowcasterBounceEffect;
 	fxHandle_t	bowcasterImpactEffect;
+	fxHandle_t  bowcasterWallImpactEffect;
+	fxHandle_t  bowcasterFleshImpactEffect;
 
 	// FLECHETTE
 	fxHandle_t	flechetteShotEffect;

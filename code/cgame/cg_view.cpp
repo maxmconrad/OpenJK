@@ -1414,6 +1414,10 @@ static qboolean	CG_CalcFov( void ) {
 					// binoculars zooming either in or out
 					cg_zoomFov += cg.zoomDir * cg.frametime * 0.05f;
 				}
+				else if (cg.zoomMode == 4 ) // fixed zoom for EE-3 rifle
+				{
+					cg_zoomFov = 60.0f;
+				}
 				else
 				{
 					// disruptor zooming in faster

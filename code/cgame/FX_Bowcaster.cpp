@@ -71,7 +71,7 @@ FX_BowcasterHitWall
 
 void FX_BowcasterHitWall( vec3_t origin, vec3_t normal )
 {
-	theFxScheduler.PlayEffect( cgs.effects.bowcasterImpactEffect, origin, normal );
+	theFxScheduler.PlayEffect( cgs.effects.bowcasterWallImpactEffect, origin, normal );
 }
 
 /*
@@ -82,5 +82,5 @@ FX_BowcasterHitPlayer
 
 void FX_BowcasterHitPlayer( vec3_t origin, vec3_t normal, qboolean humanoid )
 {
-	theFxScheduler.PlayEffect( cgs.effects.bowcasterImpactEffect, origin, normal );
+	theFxScheduler.PlayEffect( cgs.effects.bowcasterFleshImpactEffect, origin, normal );
 }

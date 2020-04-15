@@ -439,9 +439,16 @@ void CG_RegisterWeapon( int weaponNum ) {
         cgs.media.ee3Insert       = cgi_R_RegisterShader( "gfx/2d/ee3/cropCircle");
         cgs.media.ee3Light        = cgi_R_RegisterShader( "gfx/2d/ee3/cropCircleGlow" );
         cgs.media.ee3InsertTick   = cgi_R_RegisterShader( "gfx/2d/insertTick" );
+		/*
 		cgs.effects.bowcasterShotEffect		= theFxScheduler.RegisterEffect( "bowcaster/shot" );
 		cgs.effects.bowcasterBounceEffect	= theFxScheduler.RegisterEffect( "bowcaster/bounce_wall" );
 		cgs.effects.bowcasterImpactEffect	= theFxScheduler.RegisterEffect( "bowcaster/explosion" );
+		*/
+		cgs.effects.bowcasterShotEffect = theFxScheduler.RegisterEffect("blaster/shot");
+		cgs.effects.bowcasterBounceEffect = theFxScheduler.RegisterEffect("bowcaster/bounce_wall");
+		cgs.effects.bowcasterImpactEffect = theFxScheduler.RegisterEffect("bowcaster/explosion");
+		cgs.effects.bowcasterWallImpactEffect = theFxScheduler.RegisterEffect("blaster/wall_impact");
+		cgs.effects.bowcasterFleshImpactEffect = theFxScheduler.RegisterEffect("blaster/flesh_impact");
 		theFxScheduler.RegisterEffect( "bowcaster/deflect" );
 		break;
 

@@ -235,6 +235,8 @@ void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean 
 		}
 	}
 
+	//VectorCopy(ent->client->renderInfo.eyePoint, start); //Testing: does it hit correctly when zoomed in?
+
 	WP_TraceSetStart(ent, start, vec3_origin, vec3_origin);//make sure our start point isn't on the other side of a wall
 
 	WP_MissileTargetHint(ent, start, dir);
