@@ -14466,11 +14466,11 @@ void PM_AdjustAttackStates( pmove_t *pm )
 			if (cg.zoomMode == 0 || cg.zoomMode == 3)
 			{
                 // not already zooming, so do it now 
-				cg.zoomMode = 2;
+				cg.zoomMode = 4;
 				cg.zoomLocked = qfalse;
 				cg_zoomFov = 80.0f;
 			}
-			else if (cg.zoomMode == 2)
+			else if (cg.zoomMode == 4)
 			{
                 // already zooming, so must be wanting to turn it off
 				cg.zoomMode = 0;
@@ -14481,7 +14481,7 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		else if (!(pm->cmd.buttons & BUTTON_ALT_ATTACK))
 		{
 			// Not pressing zoom any more
-			if (cg.zoomMode == 2)
+			if (cg.zoomMode == 4)
 			{
 				// were zooming in, so now lock the zoom
 				cg.zoomLocked = qtrue;
@@ -14492,7 +14492,7 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		{
 			// If we are zoomed, we should switch the ammo usage to the alt-fire, otherwise, we'll
 			//	just use whatever ammo was selected from above
-			if (cg.zoomMode == 2)
+			if (cg.zoomMode == 4)
 			{
 				amount = pm->ps->ammo[weaponData[pm->ps->weapon].ammoIndex] -
 					weaponData[pm->ps->weapon].altEnergyPerShot;

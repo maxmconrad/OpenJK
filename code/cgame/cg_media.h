@@ -207,6 +207,12 @@ typedef struct {
 	qhandle_t	laGogglesBracket;
 	qhandle_t	laGogglesArrow;
 
+	// EE-3 zoom graphics
+	qhandle_t	ee3Mask;
+	qhandle_t	ee3Insert;
+	qhandle_t	ee3Light;
+	qhandle_t	ee3InsertTick;
+
 	// wall mark shaders
 	qhandle_t	scavMarkShader;
 	qhandle_t	rivetMarkShader;

@@ -297,7 +297,7 @@ void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 
     if (alt_fire)
     {
-        return
+		return;
     }
 
 	if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
