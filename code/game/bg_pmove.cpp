@@ -14454,20 +14454,25 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		}
 	}
 
-	// setting up zoom for EE-3 rifle
+	// setting up zoom for EE-3 rifle, only the player can zoom
 	if (pm->ps->weapon == WP_BOWCASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
 	{
+        // we are not alt-firing yet, but the alt-attack button was just pressed and
+        // we either are ducking ( in which case we don't care if they are moving )...or they are not ducking...and also not moving right/forward.
 		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
 			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
 		{
+            // We just pressed the alt-fire key
 			if (cg.zoomMode == 0 || cg.zoomMode == 3)
 			{
+                // not already zooming, so do it now 
 				cg.zoomMode = 2;
 				cg.zoomLocked = qfalse;
 				cg_zoomFov = 80.0f;
 			}
 			else if (cg.zoomMode == 2)
 			{
+                // already zooming, so must be wanting to turn it off
 				cg.zoomMode = 0;
 				cg.zoomTime = cg.time;
 				cg.zoomLocked = qfalse;
