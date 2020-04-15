@@ -14454,6 +14454,52 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		}
 	}
 
+	// setting up zoom for EE-3 rifle
+	if (pm->ps->weapon == WP_BOWCASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
+	{
+		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
+			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
+		{
+			if (cg.zoomMode == 0 || cg.zoomMode == 3)
+			{
+				cg.zoomMode = 2;
+				cg.zoomLocked = qfalse;
+				cg_zoomFov = 80.0f;
+			}
+			else if (cg.zoomMode == 2)
+			{
+				cg.zoomMode = 0;
+				cg.zoomTime = cg.time;
+				cg.zoomLocked = qfalse;
+			}
+		}
+		else if (!(pm->cmd.buttons & BUTTON_ALT_ATTACK))
+		{
+			// Not pressing zoom any more
+			if (cg.zoomMode == 2)
+			{
+				// were zooming in, so now lock the zoom
+				cg.zoomLocked = qtrue;
+			}
+		}
+
+		if (pm->cmd.buttons & BUTTON_ATTACK)
+		{
+			// If we are zoomed, we should switch the ammo usage to the alt-fire, otherwise, we'll
+			//	just use whatever ammo was selected from above
+			if (cg.zoomMode == 2)
+			{
+				amount = pm->ps->ammo[weaponData[pm->ps->weapon].ammoIndex] -
+					weaponData[pm->ps->weapon].altEnergyPerShot;
+			}
+		}
+		else
+		{
+			// alt-fire button pressing doesn't use any ammo
+			amount = 0;
+		}
+	}
+
 	// disruptor alt-fire should toggle the zoom mode, but only bother doing this for the player?
 	if ( pm->ps->weapon == WP_DISRUPTOR && pm->gent && (pm->gent->s.number<MAX_CLIENTS||G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING )
 	{
