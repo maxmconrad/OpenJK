@@ -435,6 +435,10 @@ void CG_RegisterWeapon( int weaponNum ) {
 		break;
 
 	case WP_BOWCASTER:
+        cgs.media.disruptorMask         = cgi_R_RegisterShader( "gfx/2d/cropCircle2");
+        cgs.media.disruptorInsert       = cgi_R_RegisterShader( "gfx/2d/cropCircle");
+        cgs.media.disruptorLight        = cgi_R_RegisterShader( "gfx/2d/cropCircleGlow" );
+        cgs.media.disruptorInsertTick   = cgi_R_RegisterShader( "gfx/2d/insertTick" );
 		cgs.effects.bowcasterShotEffect		= theFxScheduler.RegisterEffect( "bowcaster/shot" );
 		cgs.effects.bowcasterBounceEffect	= theFxScheduler.RegisterEffect( "bowcaster/bounce_wall" );
 		cgs.effects.bowcasterImpactEffect	= theFxScheduler.RegisterEffect( "bowcaster/explosion" );
