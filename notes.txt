@@ -1,0 +1,8 @@
+cg.zoomMode
+===========
+
+0 - not zoomed in
+1 - binoculars 
+2 - disruptor zoom
+3 - night vision goggles
+4 - tbd, ee-3 zoom
