@@ -295,6 +295,11 @@ void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 
 	vectoangles(forwardVec, angs);
 
+    if (alt_fire)
+    {
+        return
+    }
+
 	if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
 	{//no inherent aim screw up
 	}
