@@ -2342,98 +2342,9 @@ static void CG_DrawZoomMask( void )
 	//---------------------------
 	else if (cg.zoomMode == 4)
 	{
-		level = (float)(80.0f - cg_zoomFov) / 80.0f;
-
-		// ...so we'll clamp it
-		if (level < 0.0f)
-		{
-			level = 0.0f;
-		}
-		else if (level > 1.0f)
-		{
-			level = 1.0f;
-		}
-
-		// Using a magic number to convert the zoom level to a rotation amount that correlates more or less with the zoom artwork.
-		level *= 103.0f;
-
 		// Draw target mask
 		cgi_R_SetColor(colorTable[CT_WHITE]);
 		CG_DrawPic(0, 0, 640, 480, cgs.media.ee3Mask);
-
-		// apparently 99.0f is the full zoom level
-		if (level >= 99)
-		{
-			// Fully zoomed, so make the rotating insert pulse
-			color1[0] = 1.0f;
-			color1[1] = 1.0f;
-			color1[2] = 1.0f;
-			color1[3] = 0.7f + sin(cg.time * 0.01f) * 0.3f;
-
-			cgi_R_SetColor(color1);
-		}
-
-		// Draw rotating insert
-		CG_DrawRotatePic2(320, 240, 640, 480, -level, cgs.media.ee3Insert);
-
-		float cx, cy;
-		float max;
-
-		max = cg_entities[0].gent->client->ps.ammo[weaponData[WP_BOWCASTER].ammoIndex] / (float)ammoData[weaponData[WP_BOWCASTER].ammoIndex].max;
-
-		if (max > 1.0f)
-		{
-			max = 1.0f;
-		}
-
-		color1[0] = (1.0f - max) * 2.0f;
-		color1[1] = max * 1.5f;
-		color1[2] = 0.0f;
-		color1[3] = 1.0f;
-
-		// If we are low on ammo, make us flash
-		if (max < 0.15f && (cg.time & 512))
-		{
-			VectorClear(color1);
-		}
-
-		if (color1[0] > 1.0f)
-		{
-			color1[0] = 1.0f;
-		}
-
-		if (color1[1] > 1.0f)
-		{
-			color1[1] = 1.0f;
-		}
-
-		cgi_R_SetColor(color1);
-
-		max *= 58.0f;
-
-		for (float i = 18.5f; i <= 18.5f + max; i += 3) // going from 15 to 45 degrees, with 5 degree increments
-		{
-			cx = 320 + sin((i + 90.0f) / 57.296f) * 190;
-			cy = 240 + cos((i + 90.0f) / 57.296f) * 190;
-
-			CG_DrawRotatePic2(cx, cy, 12, 24, 90 - i, cgs.media.ee3InsertTick);
-		}
-
-		// FIXME: doesn't know about ammo!! which is bad because it draws charge beyond what ammo you may have..
-		if (cg_entities[0].gent->client->ps.weaponstate == WEAPON_CHARGING_ALT)
-		{
-			cgi_R_SetColor(colorTable[CT_WHITE]);
-
-			// draw the charge level
-			max = (cg.time - cg_entities[0].gent->client->ps.weaponChargeTime) / (150.0f * 10.0f); // bad hardcodedness 150 is disruptor charge unit and 10 is max charge units allowed.
-
-			if (max > 1.0f)
-			{
-				max = 1.0f;
-			}
-
-			CG_DrawPic2(257, 435, 134 * max, 34, 0, 0, max, 1, cgi_R_RegisterShaderNoMip("gfx/2d/crop_charge"));
-		}
 	}
 }
 

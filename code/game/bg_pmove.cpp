@@ -8916,7 +8916,7 @@ static void PM_BeginWeaponChange( int weapon ) {
 	// eezstreet edit: also ignore if we change to WP_NONE..sorta hacky fix for binoculars using WP_SABER
 	if ( pm->ps->clientNum == 0 && cg.weaponSelect != WP_NONE )
 	{
-		if ( cg.zoomMode > 0 && cg.zoomMode < 3 )
+		if ( cg.zoomMode > 0 && ( cg.zoomMode < 3 || cg.zoomMode == 4 ))
 		{
 			cg.zoomMode = 0;
 			cg.zoomTime = cg.time;
@@ -13819,6 +13819,18 @@ static void PM_Weapon( void )
 				else
 				{//in primary fire mode
 					PM_SetAnim( pm, SETANIM_TORSO, BOTH_ATTACK3, SETANIM_FLAG_OVERRIDE|SETANIM_FLAG_HOLD|SETANIM_FLAG_RESTART);
+				}
+				break;
+
+			case WP_BOWCASTER:
+				if (((pm->ps->clientNum >= MAX_CLIENTS && !PM_ControlledByPlayer()) && pm->gent && pm->gent->NPC && (pm->gent->NPC->scriptFlags & SCF_ALT_FIRE)) ||
+					((pm->ps->clientNum < MAX_CLIENTS || PM_ControlledByPlayer()) && cg.zoomMode == 4))
+				{// NPC or player in alt-fire, EE-3 zoomed mode
+					PM_SetAnim(pm, SETANIM_TORSO, BOTH_ATTACK4, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
+				}
+				else
+				{// primary fire
+					PM_SetAnim(pm, SETANIM_TORSO, BOTH_ATTACK4, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD | SETANIM_FLAG_RESTART);
 				}
 				break;
 

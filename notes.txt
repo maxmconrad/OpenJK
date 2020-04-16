@@ -13,7 +13,7 @@ Weapon Code
 // weapon code in 'game'
 game/bg_pmove.cpp: void Pmove( pmove_t *pmove )
 |
-+-> game/bg_pmove.cpp: static void PM_Weapon( void ) // ammo being taken away, misc
++-> game/bg_pmove.cpp: static void PM_Weapon( void ) // Generates weapon events and modifes the weapon counter, ammo being taken away, misc
    
 game/g_active.cpp: void ClientEvents( gentity_t *ent, int oldEventSequence ) // case EV_FIRE_WEAPON, case EV_ALT_FIRE:
 |

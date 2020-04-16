@@ -190,22 +190,6 @@ static void WP_BowcasterAltFire( gentity_t *ent )
 
 */
 
-/*
-//---------------------------------------------------------
-void WP_FireBowcaster( gentity_t *ent, qboolean alt_fire )
-//---------------------------------------------------------
-{
-	if ( alt_fire )
-	{
-		WP_BowcasterAltFire( ent );
-	}
-	else
-	{
-		WP_BowcasterMainFire( ent );
-	}
-}
-*/
-
 //---------------------------------------------------------
 void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean altFire)
 //---------------------------------------------------------
@@ -288,6 +272,22 @@ void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean 
 	// we don't want it to bounce forever
 	missile->bounceCount = 8;
 }
+
+/*
+//---------------------------------------------------------
+void WP_FireBowcaster( gentity_t *ent, qboolean alt_fire )
+//---------------------------------------------------------
+{
+	if ( alt_fire )
+	{
+		WP_BowcasterAltFire( ent );
+	}
+	else
+	{
+		WP_BowcasterMainFire( ent );
+	}
+}
+*/
 
 //---------------------------------------------------------
 void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
