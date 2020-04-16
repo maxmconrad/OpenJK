@@ -6,3 +6,29 @@ cg.zoomMode
 2 - disruptor zoom
 3 - night vision goggles
 4 - tbd, ee-3 zoom
+
+Weapon Code
+===========
+
+// weapon code in 'game'
+game/bg_pmove.cpp: void Pmove( pmove_t *pmove )
+|
++-> game/bg_pmove.cpp: static void PM_Weapon( void ) // ammo being taken away, misc
+   
+game/g_active.cpp: void ClientEvents( gentity_t *ent, int oldEventSequence ) // case EV_FIRE_WEAPON, case EV_ALT_FIRE:
+|
++->g_weapon.cpp: void FireWeapon( gentity_t *ent, qboolean alt_fire )
+
+// weapon code in 'cgame'
+
+cgame/cg_event.cpp: void CG_EntityEvent( centity_t *cent, vec3_t position ) // case EV_FIRE_WEAPON, case EV_ALT_FIRE
+|
++->cg_weapon: void CG_FireWeapon( centity_t *cent, qboolean alt_fire )
+
+//
+// usable in Pmove/PM_Weapon?
+//
+pm->ps->weapon == WP_BLASTER
+pm->ps->weaponstate == WEAPON_RAISING
+
+pm->cmd.buttons &= ~BUTTON_ALT_ATTACK;

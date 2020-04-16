@@ -1416,7 +1416,7 @@ static qboolean	CG_CalcFov( void ) {
 				}
 				else if (cg.zoomMode == 4 ) // fixed zoom for EE-3 rifle
 				{
-					cg_zoomFov = 60.0f;
+					cg_zoomFov = 40.0f;
 				}
 				else
 				{
