@@ -28,7 +28,13 @@ cgame/cg_event.cpp: void CG_EntityEvent( centity_t *cent, vec3_t position ) // c
 //
 // usable in Pmove/PM_Weapon?
 //
+
 pm->ps->weapon == WP_BLASTER
 pm->ps->weaponstate == WEAPON_RAISING
 
 pm->cmd.buttons &= ~BUTTON_ALT_ATTACK;
+
+cg.zoomMode==3
+
+void PM_AdjustAttackStates( pmove_t *pm ) // disruptor alt-fire and zoom set
+static void PM_Weapon( void ) // generates weapon events and modifes the weapon counter, ammo being taken away, shooting animation

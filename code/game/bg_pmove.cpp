@@ -14656,6 +14656,20 @@ void PM_AdjustAttackStates( pmove_t *pm )
 			pm->cmd.buttons &= ~BUTTON_ALT_ATTACK;
 		}
 	}
+
+	// Testing: block EE-3 alt fire?
+	if (pm->ps->weapon == WP_BOWCASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)))
+	{
+		if (pm->cmd.buttons & BUTTON_ATTACK && cg.zoomMode == 4)
+		{			
+			// do nothing, actually
+		}
+		else
+		{
+			// but don't let an alt-fire through
+			pm->cmd.buttons &= ~BUTTON_ALT_ATTACK;
+		}
+	}
 }
 
 qboolean PM_WeaponOkOnVehicle( int weapon )
