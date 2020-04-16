@@ -2653,7 +2653,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 		return;
 	}
 
-	if ( cg.zoomMode > 0 && cg.zoomMode < 3 )
+	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4)) // consider EE-3 scope
 	{
 		//not while scoped
 		return;
