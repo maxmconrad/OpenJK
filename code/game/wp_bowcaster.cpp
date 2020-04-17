@@ -34,30 +34,26 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean altFire)
 //---------------------------------------------------------
 {
-	// set up Bowcaster as EE-3 Rifle, similar to E-11 but more accturate and powerful
+	// set up Bowcaster as EE-3 rifle missile, similar to E-11 but more accturate and powerful
 	int velocity = BOWCASTER_VELOCITY;
 	int	damage = altFire ? weaponData[WP_BOWCASTER].altDamage : weaponData[WP_BOWCASTER].damage;
 
-	if (ent && ent->client && ent->client->NPC_class == CLASS_VEHICLE)
+	// If an enemy is shooting at us, lower the velocity so you have a chance to evade
+	if (ent->client && ent->client->ps.clientNum != 0 && ent->client->NPC_class != CLASS_BOBAFETT)
 	{
-		damage *= 3;
-		velocity = ATST_MAIN_VEL + ent->client->ps.speed;
-	}
-	else
-	{
-		// If an enemy is shooting at us, lower the velocity so you have a chance to evade
-		if (ent->client && ent->client->ps.clientNum != 0 && ent->client->NPC_class != CLASS_BOBAFETT)
+		if (g_spskill->integer < 2)
 		{
-			if (g_spskill->integer < 2)
-			{
-				velocity *= BLASTER_NPC_VEL_CUT;
-			}
-			else
-			{
-				velocity *= BLASTER_NPC_HARD_VEL_CUT;
-			}
+			velocity *= BLASTER_NPC_VEL_CUT;
+		}
+		else
+		{
+			velocity *= BLASTER_NPC_HARD_VEL_CUT;
 		}
 	}
+
+	// Testing: aim better? - It actually does help when zooming, need to split alt and main fire like the disruptor
+	//VectorCopy(ent->client->renderInfo.eyePoint, start);
+	//AngleVectors(ent->client->renderInfo.eyeAngles, dir, NULL, NULL);
 
 	//VectorCopy(ent->client->renderInfo.eyePoint, start); //Testing: does it hit correctly when zoomed in?
 
@@ -71,7 +67,7 @@ void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean 
 	missile->s.weapon = WP_BOWCASTER;
 
 	// Do the damages
-	if (ent->s.number != 0 && ent->client->NPC_class != CLASS_BOBAFETT)
+	if (ent->s.number != 0)
 	{
 		if (g_spskill->integer == 0)
 		{
@@ -113,22 +109,38 @@ void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean 
 	missile->bounceCount = 8;
 }
 
-/*
+//---------------------------------------------------------
+void WP_BowcasterAltFire(gentity_t* ent, qboolean alt_fire)
+//---------------------------------------------------------
+{
+	vec3_t		start;
+	VectorCopy(ent->client->renderInfo.eyePoint, start);
+	AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
+	WP_FireBowcasterMissile(ent, start, forwardVec, alt_fire);
+}
+//----------------------------------------------------------
+void WP_BowcasterMainFire(gentity_t *ent, qboolean alt_fire)
+//----------------------------------------------------------
+{
+	WP_FireBowcasterMissile(ent, muzzle, forwardVec, alt_fire);
+}
+
 //---------------------------------------------------------
 void WP_FireBowcaster( gentity_t *ent, qboolean alt_fire )
 //---------------------------------------------------------
 {
 	if ( alt_fire )
 	{
-		WP_BowcasterAltFire( ent );
+		WP_BowcasterAltFire( ent, alt_fire );
 	}
 	else
 	{
-		WP_BowcasterMainFire( ent );
+		WP_BowcasterMainFire( ent, alt_fire );
 	}
 }
-*/
 
+
+/*
 //---------------------------------------------------------
 void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 //---------------------------------------------------------
@@ -180,3 +192,4 @@ void WP_FireBowcaster(gentity_t* ent, qboolean alt_fire)
 	// FIXME: if temp_org does not have clear trace to inside the bbox, don't shoot!
 	WP_FireBowcasterMissile(ent, muzzle, dir, alt_fire);
 }
+*/

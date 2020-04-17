@@ -14662,7 +14662,9 @@ void PM_AdjustAttackStates( pmove_t *pm )
 	{
 		if (pm->cmd.buttons & BUTTON_ATTACK && cg.zoomMode == 4)
 		{			
-			// do nothing, actually
+			// converting the main fire to an alt-fire, like the disruptor
+			pm->cmd.buttons |= BUTTON_ALT_ATTACK;
+			pm->ps->eFlags |= EF_ALT_FIRING;
 		}
 		else
 		{
