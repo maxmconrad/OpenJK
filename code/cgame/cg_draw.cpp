@@ -2346,6 +2346,15 @@ static void CG_DrawZoomMask( void )
 		cgi_R_SetColor(colorTable[CT_WHITE]);
 		CG_DrawPic(0, 0, 640, 480, cgs.media.ee3Mask);
 	}
+	//---------------------------
+	// DL-44 blaster pistol zoom
+	//---------------------------
+	else if (cg.zoomMode == 5)
+	{
+	// Draw target mask
+	cgi_R_SetColor(colorTable[CT_WHITE]);
+	CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
+	}
 }
 
 /*
@@ -2564,7 +2573,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 		return;
 	}
 
-	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4)) // consider EE-3 scope
+	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode >= 4)) // consider new scopes
 	{
 		//not while scoped
 		return;

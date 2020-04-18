@@ -1405,7 +1405,7 @@ static qboolean	CG_CalcFov( void ) {
 		}
 
 		// Disable zooming when in third person
-		if ( cg.zoomMode && ( cg.zoomMode < 3 || cg.zoomMode == 4 ))//&& !cg.renderingThirdPerson ) // light amp goggles do none of the zoom silliness
+		if ( cg.zoomMode && ( cg.zoomMode < 3 || cg.zoomMode >= 4 ))//&& !cg.renderingThirdPerson ) // light amp goggles do none of the zoom silliness
 		{
 			if ( !cg.zoomLocked )
 			{
@@ -1417,6 +1417,10 @@ static qboolean	CG_CalcFov( void ) {
 				else if (cg.zoomMode == 4 ) // fixed zoom for EE-3 rifle
 				{
 					cg_zoomFov = 40.0f;
+				}
+				else if (cg.zoomMode == 5) // fixed zoom for blaster pistol
+				{
+					cg_zoomFov = 35.0f;
 				}
 				else
 				{

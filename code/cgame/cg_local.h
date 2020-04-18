@@ -368,7 +368,7 @@ typedef struct {
 	vec3_t		refdefViewAngles;		// will be converted to refdef.viewaxis
 
 	// zoom key
-	int			zoomMode;		// 0 - not zoomed, 1 - binoculars, 2 - disruptor weapon, 3 - night vision goggles?, 4 - EE-3 zoom
+	int			zoomMode;		// 0 - not zoomed, 1 - binoculars, 2 - disruptor weapon, 3 - night vision goggles?, 4 - EE-3 zoom, 5 - DL-44 blaster pistol zoom
 	int			zoomDir;		// -1, 1
 	int			zoomTime;
 	qboolean	zoomLocked;

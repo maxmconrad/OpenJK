@@ -213,6 +213,9 @@ typedef struct {
 	qhandle_t	ee3Light;
 	qhandle_t	ee3InsertTick;
 
+	// DL-44 blaster pistol zoom graphic
+	qhandle_t	dl44Mask;
+
 	// wall mark shaders
 	qhandle_t	scavMarkShader;
 	qhandle_t	rivetMarkShader;
