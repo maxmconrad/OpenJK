@@ -445,7 +445,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		cgs.effects.bowcasterBounceEffect	= theFxScheduler.RegisterEffect( "bowcaster/bounce_wall" );
 		cgs.effects.bowcasterImpactEffect	= theFxScheduler.RegisterEffect( "bowcaster/explosion" );
 		*/
-		cgs.effects.bowcasterShotEffect = theFxScheduler.RegisterEffect("blaster/shot");
+		cgs.effects.bowcasterShotEffect = theFxScheduler.RegisterEffect("bowcaster/shot");
 		cgs.effects.bowcasterBounceEffect = theFxScheduler.RegisterEffect("bowcaster/bounce_wall");
 		cgs.effects.bowcasterImpactEffect = theFxScheduler.RegisterEffect("bowcaster/explosion");
 		cgs.effects.bowcasterWallImpactEffect = theFxScheduler.RegisterEffect("blaster/wall_impact");

@@ -174,7 +174,7 @@ typedef struct ammoData_s
 
 // E11 Blaster
 //---------
-#define BLASTER_MAIN_SPREAD			0.5f
+#define BLASTER_MAIN_SPREAD			0.3f
 #define BLASTER_ALT_SPREAD			1.5f
 #define BLASTER_NPC_SPREAD			0.5f
 #define BLASTER_VELOCITY			2300
@@ -215,7 +215,7 @@ typedef struct ammoData_s
 //#define BOWCASTER_VEL_RANGE			0.3f
 //#define BOWCASTER_CHARGE_UNIT		200.0f	// bowcaster charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
 
-#define	BOWCASTER_DAMAGE			45
+#define	BOWCASTER_DAMAGE			60
 #define	BOWCASTER_VELOCITY			4000
 #define	BOWCASTER_NPC_DAMAGE_EASY	12
 #define	BOWCASTER_NPC_DAMAGE_NORMAL	24
