@@ -14517,6 +14517,57 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		}
 	}
 
+	// a little bit of zooming for the E-11
+	if (pm->ps->weapon == WP_BLASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
+	{
+		// we are not alt-firing yet, but the alt-attack button was just pressed and
+		// we either are ducking ( in which case we don't care if they are moving )...or they are not ducking...and also not moving right/forward.
+		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
+			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
+		{
+			// We just pressed the alt-fire key
+			if (cg.zoomMode == 0 || cg.zoomMode == 3)
+			{
+				// not already zooming, so do it now 
+				cg.zoomMode = 6;
+				cg.zoomLocked = qfalse;
+				cg_zoomFov = 80.0f;
+			}
+			else if (cg.zoomMode == 6)
+			{
+				// already zooming, so must be wanting to turn it off
+				cg.zoomMode = 0;
+				cg.zoomTime = cg.time;
+				cg.zoomLocked = qfalse;
+			}
+		}
+		else if (!(pm->cmd.buttons & BUTTON_ALT_ATTACK))
+		{
+			// Not pressing zoom any more
+			if (cg.zoomMode == 6)
+			{
+				// were zooming in, so now lock the zoom
+				cg.zoomLocked = qtrue;
+			}
+		}
+
+		if (pm->cmd.buttons & BUTTON_ATTACK)
+		{
+			// If we are zoomed, we should switch the ammo usage to the alt-fire, otherwise, we'll
+			//	just use whatever ammo was selected from above
+			if (cg.zoomMode == 6)
+			{
+				amount = pm->ps->ammo[weaponData[pm->ps->weapon].ammoIndex] -
+					weaponData[pm->ps->weapon].altEnergyPerShot;
+			}
+		}
+		else
+		{
+			// alt-fire button pressing doesn't use any ammo
+			amount = 0;
+		}
+	}
+
 	// setting up zoom for EE-3 rifle, only the player can zoom
 	if (pm->ps->weapon == WP_BOWCASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
 	{
@@ -14727,6 +14778,21 @@ void PM_AdjustAttackStates( pmove_t *pm )
 	if (pm->ps->weapon == WP_BLASTER_PISTOL && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)))
 	{
 		if (pm->cmd.buttons & BUTTON_ATTACK && cg.zoomMode == 5)
+		{
+			// converting the main fire to an alt-fire, like the disruptor
+			pm->cmd.buttons |= BUTTON_ALT_ATTACK;
+			pm->ps->eFlags |= EF_ALT_FIRING;
+		}
+		else
+		{
+			// but don't let an alt-fire through
+			pm->cmd.buttons &= ~BUTTON_ALT_ATTACK;
+		}
+	}
+	//  convert main-fire to alt-fire for E-11 blaster rifle for zooming, it has a little scope as well!
+	if (pm->ps->weapon == WP_BLASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)))
+	{
+		if (pm->cmd.buttons & BUTTON_ATTACK && cg.zoomMode == 6)
 		{
 			// converting the main fire to an alt-fire, like the disruptor
 			pm->cmd.buttons |= BUTTON_ALT_ATTACK;

@@ -1045,7 +1045,9 @@ void CG_AddViewWeapon( playerState_t *ps )
 	}
 
 	// allow the gun to be completely removed
-	if ( !cg_drawGun.integer || cg.zoomMode )
+	// remove following guns when zooming: disruptor, bowcaster/ee3, dl44
+	// don't remove: e11
+	if ( !cg_drawGun.integer || ( cg.zoomMode > 0 && cg.zoomMode != 6))
 	{
 		vec3_t		origin;
 

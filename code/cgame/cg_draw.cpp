@@ -2573,7 +2573,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 		return;
 	}
 
-	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode >= 4)) // consider new scopes
+	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4 || cg.zoomMode == 5 )) // consider new scopes
 	{
 		//not while scoped
 		return;

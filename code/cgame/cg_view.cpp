@@ -1423,6 +1423,10 @@ static qboolean	CG_CalcFov( void ) {
 				{
 					cg_zoomFov = BRYAR_ZOOM_FOV;
 				}
+				else if (cg.zoomMode == 6) // fixed zoom for E-11 blaster
+				{
+					cg_zoomFov = BLASTER_ZOOM_FOV;
+				}
 				else
 				{
 					// disruptor zooming in faster

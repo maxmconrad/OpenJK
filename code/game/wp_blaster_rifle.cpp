@@ -32,12 +32,52 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 //---------------
 
 //---------------------------------------------------------
-void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean altFire )
+void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean alt_fire )
 //---------------------------------------------------------
 {
 	int velocity	= BLASTER_VELOCITY;
-	int	damage		= altFire ? weaponData[WP_BLASTER].altDamage : weaponData[WP_BLASTER].damage;
+	int	damage		= alt_fire ? weaponData[WP_BLASTER].altDamage : weaponData[WP_BLASTER].damage;
+	vec3_t	angs;
 
+	// fudge up npc aim
+	vectoangles(forwardVec, angs);
+
+	if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
+	{//no inherent aim screw up
+	}
+	else if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
+		|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
+	{//force sight 2+ gives perfect aim
+		//FIXME: maybe force sight level 3 autoaims some?
+		if (alt_fire)
+		{
+			// add some slop to the alt-fire direction
+			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
+			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
+		}
+		else
+		{
+			// Troopers use their aim values as well as the gun's inherent inaccuracy
+			// so check for all classes of stormtroopers and anyone else that has aim error
+			if (ent->client && ent->NPC &&
+				(ent->client->NPC_class == CLASS_STORMTROOPER ||
+					ent->client->NPC_class == CLASS_SWAMPTROOPER))
+			{
+				angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+				angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+			}
+			else
+			{
+				// add some slop to the main-fire direction
+				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+				angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+			}
+		}
+	}
+
+	AngleVectors(angs, dir, NULL, NULL);
+
+	//NPCs have really slow projectiles it seems
 	if ( ent && ent->client && ent->client->NPC_class == CLASS_VEHICLE )
 	{
 		damage *= 3;
@@ -63,7 +103,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 
 	WP_MissileTargetHint(ent, start, dir);
 
-	gentity_t *missile = CreateMissile( start, dir, velocity, 10000, ent, altFire );
+	gentity_t *missile = CreateMissile( start, dir, velocity, 10000, ent, alt_fire );
 
 	missile->classname = "blaster_proj";
 	missile->s.weapon = WP_BLASTER;
@@ -97,7 +137,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 
 	missile->damage = damage;
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
-	if ( altFire )
+	if ( alt_fire )
 	{
 		missile->methodOfDeath = MOD_BLASTER_ALT;
 	}
@@ -111,8 +151,34 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 	missile->bounceCount = 8;
 }
 
+//--------------------------------------------------------
+void WP_BlasterMainFire(gentity_t* ent, qboolean alt_fire)
+//--------------------------------------------------------
+{
+	WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+}
+
+void WP_BlasterAltFire(gentity_t* ent, qboolean alt_fire)
+{
+	WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+}
+
 //---------------------------------------------------------
-void WP_FireBlaster( gentity_t *ent, qboolean alt_fire )
+void WP_FireBlaster(gentity_t* ent, qboolean alt_fire)
+//---------------------------------------------------------
+{
+	if (!alt_fire)
+	{
+		WP_BlasterMainFire(ent, alt_fire);
+	}
+	else
+	{
+		WP_BlasterAltFire(ent, alt_fire);
+	}
+}
+
+//---------------------------------------------------------
+void WP_FireBlasterOrig( gentity_t *ent, qboolean alt_fire )
 //---------------------------------------------------------
 {
 	vec3_t	dir, angs;
