@@ -31,6 +31,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "FxScheduler.h"
 #include "../game/wp_saber.h"
 #include "../game/g_vehicles.h"
+#include "../game/weapons.h"
 
 #define MASK_CAMERACLIP (MASK_SOLID)
 #define CAMERA_SIZE	4
@@ -1416,11 +1417,11 @@ static qboolean	CG_CalcFov( void ) {
 				}
 				else if (cg.zoomMode == 4 ) // fixed zoom for EE-3 rifle
 				{
-					cg_zoomFov = 40.0f;
+					cg_zoomFov = BOWCASTER_ZOOM_FOV;
 				}
 				else if (cg.zoomMode == 5) // fixed zoom for blaster pistol
 				{
-					cg_zoomFov = 55.0f;
+					cg_zoomFov = BRYAR_ZOOM_FOV;
 				}
 				else
 				{
