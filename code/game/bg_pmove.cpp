@@ -168,7 +168,7 @@ const float	pm_vehicleaccelerate = 36.0f;
 const float	pm_accelerate = 12.0f;
 const float	pm_airaccelerate = 4.0f;
 const float	pm_wateraccelerate = 4.0f;
-const float	pm_flyaccelerate = 12.0f;
+const float	pm_flyaccelerate = 32.0f;
 
 const float	pm_friction = 6.0f;
 const float	pm_waterfriction = 1.0f;
