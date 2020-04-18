@@ -1420,7 +1420,7 @@ static qboolean	CG_CalcFov( void ) {
 				}
 				else if (cg.zoomMode == 5) // fixed zoom for blaster pistol
 				{
-					cg_zoomFov = 35.0f;
+					cg_zoomFov = 55.0f;
 				}
 				else
 				{

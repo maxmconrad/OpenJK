@@ -168,19 +168,19 @@ typedef struct ammoData_s
 
 // Bryar Pistol
 //--------
-#define BRYAR_PISTOL_VEL			1800
-#define BRYAR_PISTOL_DAMAGE			14
+#define BRYAR_PISTOL_VEL			2600
+#define BRYAR_PISTOL_DAMAGE			50 //20
 #define BRYAR_CHARGE_UNIT			200.0f	// bryar charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
 
 // E11 Blaster
 //---------
-#define BLASTER_MAIN_SPREAD			0.3f
-#define BLASTER_ALT_SPREAD			1.5f
+#define BLASTER_MAIN_SPREAD			0.175f
+#define BLASTER_ALT_SPREAD			0.5 //1.5f
 #define BLASTER_NPC_SPREAD			0.5f
 #define BLASTER_VELOCITY			2300
 #define BLASTER_NPC_VEL_CUT			0.5f
 #define BLASTER_NPC_HARD_VEL_CUT	0.7f
-#define BLASTER_DAMAGE				20
+#define BLASTER_DAMAGE				30 //25
 #define	BLASTER_NPC_DAMAGE_EASY		6
 #define	BLASTER_NPC_DAMAGE_NORMAL	12 // 14
 #define	BLASTER_NPC_DAMAGE_HARD		16 // 18
@@ -372,9 +372,9 @@ typedef struct ammoData_s
 
 // Thermal Detonator
 //--------------
-#define TD_DAMAGE			100
+#define TD_DAMAGE			300 // 100
 #define TD_NPC_DAMAGE_CUT	0.6f	// NPC thrown dets deliver only 60% of the damage that a player thrown one does
-#define TD_SPLASH_RAD		128
+#define TD_SPLASH_RAD		512 // 128
 #define TD_SPLASH_DAM		90
 #define TD_VELOCITY			900
 #define TD_MIN_CHARGE		0.15f
