@@ -41,6 +41,8 @@ void CG_DrawForceSelect( void );
 qboolean CG_WorldCoordToScreenCoord(vec3_t worldCoord, int *x, int *y);
 qboolean CG_WorldCoordToScreenCoordFloat(vec3_t worldCoord, float *x, float *y);
 
+qboolean CG_ShouldDrawCrosshairZoomed(void);
+
 extern float g_crosshairEntDist;
 extern int g_crosshairSameEntTime;
 extern int g_crosshairEntNum;
@@ -2349,12 +2351,12 @@ static void CG_DrawZoomMask( void )
 	//---------------------------
 	// DL-44 blaster pistol zoom
 	//---------------------------
-	else if (cg.zoomMode == 5)
-	{
+	//else if (cg.zoomMode == 5)
+	//{
 	// Draw target mask
-	cgi_R_SetColor(colorTable[CT_WHITE]);
-	CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
-	}
+	//cgi_R_SetColor(colorTable[CT_WHITE]);
+	//CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
+	//}
 }
 
 /*
@@ -2574,7 +2576,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 	}
 
 	//if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4 || cg.zoomMode == 5 )) // consider new scopes
-	if (!ShouldDrawCrosshairZoomed())
+	if (!CG_ShouldDrawCrosshairZoomed())
 	{
 		//not while scoped
 		return;
@@ -3226,7 +3228,7 @@ CG_ShouldDrawCrosshairZoomed
 FIXME: kind of convoluted
 ============================
 */
-static qboolean ShouldDrawCrosshairZoomed(void)
+static qboolean CG_ShouldDrawCrosshairZoomed(void)
 {
 	// no zoom, display crosshair
 	if (cg.zoomMode == 0) {
@@ -3255,10 +3257,14 @@ static qboolean ShouldDrawCrosshairZoomed(void)
 	// DL-44, do not display crosshair
 	else if (cg.zoomMode == 5)
 	{
-		return qfalse;
+		return qtrue;
 	}
 	// E-11 small zoom, display crosshair
 	else if (cg.zoomMode == 6)
+	{
+		return qtrue;
+	}
+	else
 	{
 		return qtrue;
 	}

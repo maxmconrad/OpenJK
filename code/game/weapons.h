@@ -171,7 +171,7 @@ typedef struct ammoData_s
 #define BRYAR_PISTOL_VEL			3000 // 2600
 #define BRYAR_PISTOL_DAMAGE			50 //20
 #define BRYAR_CHARGE_UNIT			200.0f	// bryar charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
-#define BRYAR_ZOOM_FOV				55.0f
+#define BRYAR_ZOOM_FOV				62.0f
 
 // E11 Blaster
 //---------
@@ -231,7 +231,7 @@ typedef struct ammoData_s
 #define BOWCASTER_ALT_SPREAD		0.4f
 #define BOWCASTER_VEL_RANGE			0.3f
 #define BOWCASTER_CHARGE_UNIT		200.0f	// bowcaster charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
-#define BOWCASTER_ZOOM_FOV			50.0f
+#define BOWCASTER_ZOOM_FOV			48.0f
 
 // Heavy Repeater
 //----------

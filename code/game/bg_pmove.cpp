@@ -14470,10 +14470,8 @@ void PM_AdjustAttackStates( pmove_t *pm )
 	// we also want to let the blaster pistol zoom, it has a scope after all
 	if (pm->ps->weapon == WP_BLASTER_PISTOL && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
 	{
-		// we are not alt-firing yet, but the alt-attack button was just pressed and
-		// we either are ducking ( in which case we don't care if they are moving )...or they are not ducking...and also not moving right/forward.
-		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
-			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
+		// we are not alt-firing yet, but the alt-attack button was just pressed
+		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK))
 		{
 			// We just pressed the alt-fire key
 			if (cg.zoomMode == 0 || cg.zoomMode == 3)
@@ -14521,10 +14519,8 @@ void PM_AdjustAttackStates( pmove_t *pm )
 	// a little bit of zooming for the E-11
 	if (pm->ps->weapon == WP_BLASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
 	{
-		// we are not alt-firing yet, but the alt-attack button was just pressed and
-		// we either are ducking ( in which case we don't care if they are moving )...or they are not ducking...and also not moving right/forward.
-		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
-			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
+		// we are not alt-firing yet, but the alt-attack button was just pressed
+		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK))
 		{
 			// We just pressed the alt-fire key
 			if (cg.zoomMode == 0 || cg.zoomMode == 3)
@@ -14572,10 +14568,8 @@ void PM_AdjustAttackStates( pmove_t *pm )
 	// setting up zoom for EE-3 rifle, only the player can zoom
 	if (pm->ps->weapon == WP_BOWCASTER && pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)) && pm->ps->weaponstate != WEAPON_DROPPING)
 	{
-        // we are not alt-firing yet, but the alt-attack button was just pressed and
-        // we either are ducking ( in which case we don't care if they are moving )...or they are not ducking...and also not moving right/forward.
-		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK)
-			&& (pm->cmd.upmove < 0 || (!pm->cmd.forwardmove && !pm->cmd.rightmove)))
+        // we are not alt-firing yet, but the alt-attack button was just pressed
+		if (!(pm->ps->eFlags & EF_ALT_FIRING) && (pm->cmd.buttons & BUTTON_ALT_ATTACK))
 		{
             // We just pressed the alt-fire key
 			if (cg.zoomMode == 0 || cg.zoomMode == 3)
