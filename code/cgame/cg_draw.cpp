@@ -2573,7 +2573,8 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 		return;
 	}
 
-	if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4 || cg.zoomMode == 5 )) // consider new scopes
+	//if (cg.zoomMode > 0 && (cg.zoomMode < 3 || cg.zoomMode == 4 || cg.zoomMode == 5 )) // consider new scopes
+	if (!ShouldDrawCrosshairZoomed())
 	{
 		//not while scoped
 		return;
@@ -3217,6 +3218,50 @@ static void CG_DrawCrosshairNames( void )
 	// scan the known entities to see if the crosshair is sighted on one
 	// This is currently being called by the rocket tracking code, so we don't necessarily want to do duplicate traces :)
 	CG_ScanForCrosshairEntity( scanAll );
+}
+
+/*
+============================
+CG_ShouldDrawCrosshairZoomed
+FIXME: kind of convoluted
+============================
+*/
+static qboolean ShouldDrawCrosshairZoomed(void)
+{
+	// no zoom, display crosshair
+	if (cg.zoomMode == 0) {
+		return qtrue;
+	}
+	// binoculars, do not dislay crosshair
+	else if (cg.zoomMode == 1)
+	{
+		return qfalse;
+	}
+	// disruptor, do not display crosshair
+	else if (cg.zoomMode == 2)
+	{
+		return qfalse;
+	}
+	// night vision, display crosshair
+	else if (cg.zoomMode == 3)
+	{
+		return qtrue;
+	}
+	// EE-3, do not display crosshair
+	else if (cg.zoomMode == 4)
+	{
+		return qfalse;
+	}
+	// DL-44, do not display crosshair
+	else if (cg.zoomMode == 5)
+	{
+		return qfalse;
+	}
+	// E-11 small zoom, display crosshair
+	else if (cg.zoomMode == 6)
+	{
+		return qtrue;
+	}
 }
 
 //--------------------------------------------------------------
