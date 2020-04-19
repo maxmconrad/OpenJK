@@ -97,10 +97,10 @@ void WP_FireBowcasterMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolean 
 void WP_BowcasterAltFire(gentity_t* ent, qboolean alt_fire)
 //---------------------------------------------------------
 {
-	vec3_t		start;
-	VectorCopy(ent->client->renderInfo.eyePoint, start);
+	vec3_t		eyeposVec;
+	VectorCopy(ent->client->renderInfo.eyePoint, eyeposVec);
 	AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
-	WP_FireBowcasterMissile(ent, start, forwardVec, alt_fire);
+	WP_FireBowcasterMissile(ent, eyeposVec, forwardVec, alt_fire);
 }
 
 //----------------------------------------------------------

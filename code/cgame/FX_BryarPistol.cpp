@@ -131,11 +131,11 @@ void FX_BryarAltProjectileThink(  centity_t *cent, const struct weaponInfo_s *we
 	}
 
 	// see if we have some sort of extra charge going on
-	for ( int t = 1; t < cent->gent->count; t++ )
-	{
-		// just add ourselves over, and over, and over when we are charged
-		theFxScheduler.PlayEffect( cgs.effects.bryarPowerupShotEffect, cent->lerpOrigin, forward );
-	}
+	//for ( int t = 1; t < cent->gent->count; t++ )
+	//{
+	//	// just add ourselves over, and over, and over when we are charged
+	//	theFxScheduler.PlayEffect( cgs.effects.bryarPowerupShotEffect, cent->lerpOrigin, forward );
+	//}
 
 	theFxScheduler.PlayEffect( cgs.effects.bryarShotEffect, cent->lerpOrigin, forward );
 }

@@ -12901,6 +12901,7 @@ static bool PM_DoChargedWeapons( void )
 	{
 	//------------------
 	case WP_BRYAR_PISTOL:
+	/*
 	case WP_BLASTER_PISTOL:
 
 		// alt-fire charges the weapon
@@ -12910,7 +12911,7 @@ static bool PM_DoChargedWeapons( void )
 			altFire = qtrue;
 		}
 		break;
-
+	*/
 	//------------------
 	case WP_DISRUPTOR:
 
@@ -13123,7 +13124,9 @@ static int PM_DoChargingAmmoUsage( int *amount )
 		*amount *= count;
 	}
 	*/
-	/* else */ if(  ( pm->ps->weapon == WP_BRYAR_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK )
+
+	/*
+	if(  ( pm->ps->weapon == WP_BRYAR_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK )
 			  || ( pm->ps->weapon == WP_BLASTER_PISTOL && pm->cmd.buttons & BUTTON_ALT_ATTACK ) )
 	{
 		// this code is duplicated ( I know, I know ) in G_weapon.cpp for the bryar alt-fire
@@ -13162,7 +13165,8 @@ static int PM_DoChargingAmmoUsage( int *amount )
 		// now that count is cool, get the real ammo usage
 		*amount *= count;
 	}
-	else if ( pm->ps->weapon == WP_DEMP2 && pm->cmd.buttons & BUTTON_ALT_ATTACK )
+	*/
+	if ( pm->ps->weapon == WP_DEMP2 && pm->cmd.buttons & BUTTON_ALT_ATTACK )
 	{
 		// this code is duplicated ( I know, I know ) in G_weapon.cpp for the demp2 alt-fire
 		count = ( level.time - pm->ps->weaponChargeTime ) / DEMP2_CHARGE_UNIT;

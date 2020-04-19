@@ -81,6 +81,7 @@ void WP_FireBryarPistolMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolea
 		missile->s.weapon = WP_BRYAR_PISTOL;
 	}
 
+	/*
 	if (alt_fire)
 	{
 		int count = (level.time - ent->client->ps.weaponChargeTime) / BRYAR_CHARGE_UNIT;
@@ -97,6 +98,7 @@ void WP_FireBryarPistolMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolea
 		damage *= count;
 		missile->count = count; // this will get used in the projectile rendering code to make a beefier effect
 	}
+	*/
 
 	missile->damage = damage;
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
@@ -129,10 +131,10 @@ void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 	else // alt-fire from scope/eye
 	{
 		
-		//VectorCopy(ent->client->renderInfo.eyePoint, eyeposVec);
-		//AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
-		//WP_FireBryarPistolMissile(ent, eyeposVec, forwardVec, alt_fire);
-		WP_FireBryarPistolMissile(ent, muzzle, forwardVec, alt_fire);
+		VectorCopy(ent->client->renderInfo.eyePoint, eyeposVec);
+		AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
+		WP_FireBryarPistolMissile(ent, eyeposVec, forwardVec, alt_fire);
+		//WP_FireBryarPistolMissile(ent, muzzle, forwardVec, alt_fire);
 	}
 
 	if ( ent->weaponModel[1] > 0 )

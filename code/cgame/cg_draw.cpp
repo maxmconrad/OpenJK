@@ -2351,12 +2351,12 @@ static void CG_DrawZoomMask( void )
 	//---------------------------
 	// DL-44 blaster pistol zoom
 	//---------------------------
-	//else if (cg.zoomMode == 5)
-	//{
+	else if (cg.zoomMode == 5)
+	{
 	// Draw target mask
-	//cgi_R_SetColor(colorTable[CT_WHITE]);
-	//CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
-	//}
+	cgi_R_SetColor(colorTable[CT_WHITE]);
+	CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
+	}
 }
 
 /*
@@ -3257,7 +3257,7 @@ static qboolean CG_ShouldDrawCrosshairZoomed(void)
 	// DL-44, do not display crosshair
 	else if (cg.zoomMode == 5)
 	{
-		return qtrue;
+		return qfalse;
 	}
 	// E-11 small zoom, display crosshair
 	else if (cg.zoomMode == 6)

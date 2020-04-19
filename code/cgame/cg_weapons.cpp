@@ -383,7 +383,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	case WP_BRYAR_PISTOL:
 	case WP_BLASTER_PISTOL: // enemy version
-		cgs.media.dl44Mask = cgi_R_RegisterShader("gfx/2d/ee3/cropCircle2");
+		cgs.media.dl44Mask = cgi_R_RegisterShader("gfx/2d/dl44/cropCircle2");
 	case WP_JAWA:
 		cgs.effects.bryarShotEffect			= theFxScheduler.RegisterEffect( "bryar/shot" );
 											theFxScheduler.RegisterEffect( "bryar/NPCshot" );
