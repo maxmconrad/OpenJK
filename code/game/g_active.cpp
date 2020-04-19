@@ -4908,6 +4908,7 @@ extern cvar_t	*g_skippingcin;
 			ucmd->upmove = 0;
 			PM_AdjustAnglesToGripper( ent, ucmd );
 		}
+		/*
 		if ( ent->client->ps.leanofs )
 		{//no shooting while leaning
 			ucmd->buttons &= ~BUTTON_ATTACK;
@@ -4916,6 +4917,7 @@ extern cvar_t	*g_skippingcin;
 				ucmd->buttons &= ~BUTTON_ALT_ATTACK;
 			}
 		}
+		*/
 	}
 	else
 	{
