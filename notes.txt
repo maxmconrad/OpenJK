@@ -43,3 +43,6 @@ static void PM_Weapon( void ) // generates weapon events and modifes the weapon 
 
 // Boba's Flamethrower
 AI_BobaFett.cpp: void Boba_DoFlameThrower( gentity_t *self )
+
+// Weird lean animation:
+game/bg_pangles.cpp: void PM_UpdateViewAngles( playerState_t *ps, usercmd_t *cmd, gentity_t *gent )
