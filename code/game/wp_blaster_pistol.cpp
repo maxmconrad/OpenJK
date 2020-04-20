@@ -130,7 +130,6 @@ void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 	}
 	else // alt-fire from scope/eye
 	{
-		
 		VectorCopy(ent->client->renderInfo.eyePoint, eyeposVec);
 		AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
 		WP_FireBryarPistolMissile(ent, eyeposVec, forwardVec, alt_fire);

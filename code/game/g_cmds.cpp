@@ -28,6 +28,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "g_functions.h"
 #include "../cgame/cg_local.h"
 #include "b_local.h"
+#include "w_local.h"
 
 extern	bool		in_camera;
 extern stringID_table_t SaberStyleTable[];
@@ -942,6 +943,15 @@ void Cmd_UseSentry_f(gentity_t *ent)
 	}
 }
 
+void Cmd_EnableFlamethrower_f(gentity_t* ent)
+{
+	if (ent->health < 1 || in_camera)
+	{
+		return;
+	}
+	WP_DoFlameThrower(ent);
+}
+
 /*
 ================
 Cmd_UseInventory_f
@@ -1576,6 +1586,8 @@ void ClientCommand( int clientNum ) {
 		Cmd_UseGoggles_f( ent );
 	else if (Q_stricmp (cmd, "use_sentry") == 0)
 		Cmd_UseSentry_f( ent );
+	else if (Q_stricmp(cmd, "flamethrower") == 0)
+		Cmd_EnableFlamethrower_f(ent);
 	else if (Q_stricmp (cmd, "fx") == 0)
 		Cmd_Fx( ent );
 	else if (Q_stricmp (cmd, "invuse") == 0)
