@@ -73,10 +73,10 @@ void WP_FireFlameThrower(gentity_t *self)
 
 	VectorMA(start, 150.0f, dir, end);
 
-	if (g_bobaDebug->integer)
-	{
+	//if (g_bobaDebug->integer)
+	//{
 		CG_DrawEdge(start, end, EDGE_IMPACT_POSSIBLE);
-	}
+	//}
 	gi.trace(&tr, start, self->mins, self->maxs, end, self->s.number, MASK_SHOT, (EG2_Collision)0, 0);
 
 	traceEnt = &g_entities[tr.entityNum];
@@ -108,9 +108,9 @@ void WP_StopFlameThrower(gentity_t *self)
 		//self->NPC->aiFlags &= ~NPCAI_FLAMETHROW;
 		self->client->ps.torsoAnimTimer = 0;
 
-		TIMER_Set(self, "flameTime", 0);
-		TIMER_Set(self, "nextAttackDelay", 0);
-		TIMER_Set(self, "Boba_TacticsSelect", 0);
+		//TIMER_Set(self, "flameTime", 0);
+		//TIMER_Set(self, "nextAttackDelay", 0);
+		//TIMER_Set(self, "Boba_TacticsSelect", 0);
 
 		//	G_SoundOnEnt( self, CHAN_WEAPON, "sound/effects/flameoff.mp3" );
 		G_StopEffect(G_EffectIndex("boba/fthrw"), self->playerModel, self->genericBolt3, self->s.number);
@@ -128,14 +128,14 @@ void WP_StartFlameThrower(gentity_t *self)
 	if(qtrue)
 	{
 		//NPC_SetAnim(self, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
-		PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
+		//PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
 
 		//self->NPC->aiFlags |= NPCAI_FLAMETHROW;
 		self->client->ps.torsoAnimTimer = WP_FLAMETHROWER_FLAMEDURATION;
 
-		TIMER_Set(self, "flameTime", WP_FLAMETHROWER_FLAMEDURATION);
-		TIMER_Set(self, "nextAttackDelay", WP_FLAMETHROWER_FLAMEDURATION);
-		TIMER_Set(self, "nextFlameDelay", WP_FLAMETHROWER_FLAMEDURATION * 2);
+		//TIMER_Set(self, "flameTime", WP_FLAMETHROWER_FLAMEDURATION);
+		//TIMER_Set(self, "nextAttackDelay", WP_FLAMETHROWER_FLAMEDURATION);
+		//TIMER_Set(self, "nextFlameDelay", WP_FLAMETHROWER_FLAMEDURATION * 2);
 
 		G_SoundOnEnt(self, CHAN_WEAPON, "sound/weapons/boba/bf_flame.mp3");
 		G_PlayEffect(G_EffectIndex("boba/fthrw"), self->playerModel, self->genericBolt3, self->s.number, self->s.origin, 1);
@@ -156,8 +156,8 @@ void WP_DoFlameThrower(gentity_t *self)
 			if (!self->client->ps.forcePowerDuration[FP_LIGHTNING])
 			{
 				//NPC_SetAnim(self, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
-				PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
-				self->client->ps.torsoAnimTimer = WP_FLAMETHROWER_FLAMEDURATION;
+				//PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
+				//self->client->ps.torsoAnimTimer = WP_FLAMETHROWER_FLAMEDURATION;
 				G_SoundOnEnt(self, CHAN_WEAPON, "sound/weapons/boba/bf_flame.mp3");
 				G_PlayEffect(G_EffectIndex("boba/fthrw"), self->playerModel, self->genericBolt3, self->s.number, self->s.origin, 1);
 				self->client->ps.forcePowerDuration[FP_LIGHTNING] = 1;
@@ -167,10 +167,10 @@ void WP_DoFlameThrower(gentity_t *self)
 		return;
 	}
 	//if (!(NPCInfo->aiFlags & NPCAI_FLAMETHROW) && TIMER_Done(self, "nextAttackDelay"))
-	if(TIMER_Done(self, "nextAttackDelay"))
-	{
+	//if(TIMER_Done(self, "nextAttackDelay"))
+	//{
 		WP_StartFlameThrower(self);
-	}
+	//}
 
 	//if ((NPCInfo->aiFlags & NPCAI_FLAMETHROW))
 	if(qtrue)
