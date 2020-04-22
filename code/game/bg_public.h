@@ -450,6 +450,7 @@ typedef enum {
 
 	EV_DEBUG_LINE,
 	EV_KOTHOS_BEAM,
+	EV_FLAMETHROWER_ACTIVATED, // event for playing flamethrower effects
 
 	EV_NUM_ENTITY_EVENTS
 } entity_event_t;

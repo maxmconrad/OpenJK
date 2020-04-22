@@ -943,16 +943,23 @@ void Cmd_UseSentry_f(gentity_t *ent)
 	}
 }
 
-/*
-void Cmd_EnableFlamethrower_f(gentity_t* ent)
+
+void Cmd_ToggleFlamethrower_f(gentity_t* ent)
 {
-	if (ent->health < 1 || in_camera)
+	if (!cg.wantsToEnableFlamethrower)
 	{
-		return;
+		cg.wantsToEnableFlamethrower = qtrue;
+		Com_Printf("Enabled Flamethrower...\n");
+		//WP_DoFlameThrower(ent);
 	}
-	WP_DoFlameThrower(ent);
+	else
+	{
+		cg.wantsToEnableFlamethrower = qfalse;
+		Com_Printf("Disabled Flamethrower...\n");
+		//WP_StopFlameThrower(ent);
+	}
 }
-*/
+
 
 /*
 ================
@@ -1590,10 +1597,7 @@ void ClientCommand( int clientNum ) {
 		Cmd_UseSentry_f( ent );
 	else if (Q_stricmp(cmd, "flamethrower") == 0)
     {
-        if (!cg.wantsToEnableFlamethrower)
-        {
-            cg.wantsToEnableFlamethrower = qtrue;
-        }
+		Cmd_ToggleFlamethrower_f(ent);
     }
 	else if (Q_stricmp (cmd, "fx") == 0)
 		Cmd_Fx( ent );

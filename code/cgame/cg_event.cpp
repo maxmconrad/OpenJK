@@ -1088,6 +1088,10 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 		UseItem(INV_SENTRY );
 		break;
 
+	case EV_FLAMETHROWER_ACTIVATED:
+		// WP_StartFlameThrower(ent);
+		break;
+
 	case EV_DEBUG_LINE:
 		DEBUGNAME("EV_DEBUG_LINE");
 		CG_TestLine(position, es->origin2, es->time, (unsigned int)(es->time2), es->weapon);

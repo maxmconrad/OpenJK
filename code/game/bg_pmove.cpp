@@ -14223,6 +14223,21 @@ static void PM_VehicleWeapon( void )
 	pm->ps->lastShotTime = level.time;//so we know when the last time we fired our gun is
 }
 
+void PM_Gadgets(void) {
+	if (pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)))
+	{
+		if (cg.wantsToEnableFlamethrower) {
+			pm->ps->torsoAnimTimer = 30000;
+			PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
+			PM_AddEvent(EV_FLAMETHROWER_ACTIVATED);
+		}
+		else
+		{
+			pm->ps->torsoAnimTimer = 0;
+		}
+	}
+}
+
 
 extern void ForceHeal( gentity_t *self );
 extern void ForceTelepathy( gentity_t *self );
@@ -15242,6 +15257,8 @@ void Pmove( pmove_t *pmove )
 	{
 		// weapons
 		PM_Weapon();
+		// weapon-like gadgets such as flamethrower
+		PM_Gadgets();
 	}
 	if ( pm->cmd.buttons & BUTTON_ATTACK )
 	{

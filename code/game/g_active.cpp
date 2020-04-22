@@ -29,6 +29,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "g_vehicles.h"
 #include "b_local.h"
 #include "g_navigator.h"
+#include "w_local.h"
 
 #ifdef _DEBUG
 	#include <float.h>
@@ -1810,6 +1811,10 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 			fired = qtrue;
 #endif
 			FireWeapon( ent, qtrue );
+			break;
+
+		case EV_FLAMETHROWER_ACTIVATED:
+			WP_FireFlameThrower(ent);
 			break;
 
 		default:
