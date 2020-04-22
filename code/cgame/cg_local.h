@@ -374,6 +374,9 @@ typedef struct {
 	int			zoomTime;
 	qboolean	zoomLocked;
 
+    // enabling/disabling flamethrower gadget
+    qboolean wantsToEnableFlamethrower;
+
 	// gonk use
 	int			batteryChargeTime;
 

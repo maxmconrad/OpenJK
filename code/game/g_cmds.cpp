@@ -943,6 +943,7 @@ void Cmd_UseSentry_f(gentity_t *ent)
 	}
 }
 
+/*
 void Cmd_EnableFlamethrower_f(gentity_t* ent)
 {
 	if (ent->health < 1 || in_camera)
@@ -951,6 +952,7 @@ void Cmd_EnableFlamethrower_f(gentity_t* ent)
 	}
 	WP_DoFlameThrower(ent);
 }
+*/
 
 /*
 ================
@@ -1587,7 +1589,12 @@ void ClientCommand( int clientNum ) {
 	else if (Q_stricmp (cmd, "use_sentry") == 0)
 		Cmd_UseSentry_f( ent );
 	else if (Q_stricmp(cmd, "flamethrower") == 0)
-		Cmd_EnableFlamethrower_f(ent);
+    {
+        if (!cg.wantsToEnableFlamethrower)
+        {
+            cg.wantsToEnableFlamethrower = qtrue;
+        }
+    }
 	else if (Q_stricmp (cmd, "fx") == 0)
 		Cmd_Fx( ent );
 	else if (Q_stricmp (cmd, "invuse") == 0)
