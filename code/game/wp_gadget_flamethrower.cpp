@@ -64,7 +64,7 @@ void WP_FireFlameThrower(gentity_t *self)
 	VectorCopy(self->currentOrigin, start);
 	traceMins *= 0.5f;
 	traceMaxs *= 0.5f;
-	start[2] += 20.0f; //40.0f
+	start[2] += 30.0f; //40.0f
 
 	VectorMA(start, 150.0f, dir, end);
 

@@ -949,14 +949,10 @@ void Cmd_ToggleFlamethrower_f(gentity_t* ent)
 	if (!cg.wantsToEnableFlamethrower)
 	{
 		cg.wantsToEnableFlamethrower = qtrue;
-		Com_Printf("Enabled Flamethrower...\n");
-		//WP_DoFlameThrower(ent);
 	}
 	else
 	{
 		cg.wantsToEnableFlamethrower = qfalse;
-		Com_Printf("Disabled Flamethrower...\n");
-		//WP_StopFlameThrower(ent);
 	}
 }
 

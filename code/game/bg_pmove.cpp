@@ -14240,7 +14240,6 @@ void PM_Gadgets(void) {
 		}
 		else if (!cg.wantsToEnableFlamethrower && cg.isFlamethrowerEnabled)// player is currently firing and wants to stop firing
 		{
-			Com_Printf("This should be hit only once!\n");
 			pm->ps->torsoAnimTimer = 0;
 			PM_AddEvent(EV_FLAMETHROWER_DEACTIVATED);
 			cg.isFlamethrowerEnabled = qfalse;
