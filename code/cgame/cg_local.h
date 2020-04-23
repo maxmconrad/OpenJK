@@ -376,6 +376,8 @@ typedef struct {
 
     // enabling/disabling flamethrower gadget
     qboolean wantsToEnableFlamethrower;
+	qboolean isFlamethrowerEnabled;
+	qboolean delayFlameThrowerFire;
 
 	// gonk use
 	int			batteryChargeTime;
@@ -1165,6 +1167,9 @@ void FX_TuskenShotWeaponHitPlayer( gentity_t *hit, vec3_t origin, vec3_t normal,
 void FX_NoghriShotProjectileThink( centity_t *cent, const struct weaponInfo_s *weapon );
 void FX_NoghriShotWeaponHitWall( vec3_t origin, vec3_t normal );
 void FX_NoghriShotWeaponHitPlayer( gentity_t *hit, vec3_t origin, vec3_t normal, qboolean humanoid );
+
+void FX_StopFlameThrower(gentity_t* self);
+void FX_StartFlameThrower(gentity_t* self);
 
 void CG_BounceEffect( centity_t *cent, int weapon, vec3_t origin, vec3_t normal );
 void CG_MissileStick( centity_t *cent, int weapon, vec3_t origin );

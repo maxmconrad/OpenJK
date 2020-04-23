@@ -1089,7 +1089,11 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 		break;
 
 	case EV_FLAMETHROWER_ACTIVATED:
-		// WP_StartFlameThrower(ent);
+		FX_StartFlameThrower(cent->gent);
+		break;
+
+	case EV_FLAMETHROWER_DEACTIVATED:
+		FX_StopFlameThrower(cent->gent);
 		break;
 
 	case EV_DEBUG_LINE:

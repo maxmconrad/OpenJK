@@ -14224,16 +14224,30 @@ static void PM_VehicleWeapon( void )
 }
 
 void PM_Gadgets(void) {
-	if (pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent)))
+	if (pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent))) // it's actually the player that wants to fire the flamethrower
 	{
-		if (cg.wantsToEnableFlamethrower) {
+		if (cg.wantsToEnableFlamethrower && !cg.isFlamethrowerEnabled) // player isn't firing yet and wants to fire
+		{
 			pm->ps->torsoAnimTimer = 30000;
-			PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD);
-			PM_AddEvent(EV_FLAMETHROWER_ACTIVATED);
+			PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD); // setting the firing animation initially
+			PM_AddEvent(EV_FLAMETHROWER_ACTIVATED); // only add event once, initially
+			cg.isFlamethrowerEnabled = qtrue;
+		}
+		else if (cg.wantsToEnableFlamethrower && cg.isFlamethrowerEnabled) // player is already firing and wants to continue
+		{
+			pm->ps->torsoAnimTimer = 30000;
+			PM_SetAnim(pm, SETANIM_TORSO, BOTH_FORCELIGHTNING_HOLD, SETANIM_FLAG_OVERRIDE | SETANIM_FLAG_HOLD); // setting the firing animation continously
+		}
+		else if (!cg.wantsToEnableFlamethrower && cg.isFlamethrowerEnabled)// player is currently firing and wants to stop firing
+		{
+			Com_Printf("This should be hit only once!\n");
+			pm->ps->torsoAnimTimer = 0;
+			PM_AddEvent(EV_FLAMETHROWER_DEACTIVATED);
+			cg.isFlamethrowerEnabled = qfalse;
 		}
 		else
 		{
-			pm->ps->torsoAnimTimer = 0;
+			// do nothing, definitely don't send any events?
 		}
 	}
 }

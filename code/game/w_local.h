@@ -89,6 +89,3 @@ void WP_FireTuskenRifle( gentity_t *ent );
 // Flamethrower gadget
 
 void WP_FireFlameThrower(gentity_t* self);
-void WP_StopFlameThrower(gentity_t* self);
-void WP_StartFlameThrower(gentity_t* self);
-void WP_DoFlameThrower(gentity_t* self);

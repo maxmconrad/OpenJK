@@ -28,12 +28,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "../Ravl/CVec.h"
 
 //////////////////////////////
-// External variables
-//////////////////////////////
-extern cvar_t* g_bobaDebug;
-extern pmove_t* pm;
-
-//////////////////////////////
 // External functions
 //////////////////////////////
 extern void CG_DrawEdge(vec3_t start, vec3_t end, int type);
@@ -62,7 +56,8 @@ void WP_FireFlameThrower(gentity_t *self)
 	CVec3		traceMins(self->mins);
 	CVec3		traceMaxs(self->maxs);
 	gentity_t* traceEnt = NULL;
-	int			damage = Q_irand(WP_FLAMETHROWER_FLAMETHROWDAMAGEMIN, WP_FLAMETHROWER_FLAMETHROWDAMAGEMAX);
+	//int			damage = Q_irand(WP_FLAMETHROWER_FLAMETHROWDAMAGEMIN, WP_FLAMETHROWER_FLAMETHROWDAMAGEMAX);
+	int			damage = 0;
 
 	AngleVectors(self->currentAngles, dir, 0, 0);
 	dir[2] = 0.0f;
@@ -75,7 +70,7 @@ void WP_FireFlameThrower(gentity_t *self)
 
 
 	CG_DrawEdge(start, end, EDGE_IMPACT_POSSIBLE);
-	Com_Printf("Fired Flamethrower!\n");
+	//Com_Printf("Fired Flamethrower!\n");
 	gi.trace(&tr, start, self->mins, self->maxs, end, self->s.number, MASK_SHOT, (EG2_Collision)0, 0);
 
 	traceEnt = &g_entities[tr.entityNum];
@@ -88,33 +83,4 @@ void WP_FireFlameThrower(gentity_t *self)
 			//G_Throw(traceEnt, dir, 30);
 		}
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////////////////
-void WP_StopFlameThrower(gentity_t *self)
-{
-		G_SoundOnEnt( self, CHAN_WEAPON, "sound/effects/flameoff.mp3" );
-		G_StopEffect(G_EffectIndex("boba/fthrw"), self->playerModel, self->genericBolt3, self->s.number);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////////////////
-void WP_StartFlameThrower(gentity_t *self)
-{
-		vec3_t dir;
-		G_SoundOnEnt(self, CHAN_WEAPON, "sound/weapons/boba/bf_flame.mp3");
-		G_PlayEffect(G_EffectIndex("boba/fthrw"), self->playerModel, self->genericBolt3, self->s.number, self->s.origin, 1);
-		//G_PlayEffect(G_EffectIndex("boba/fthrw"), self->s.number, self->currentOrigin);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////////////////
-void WP_DoFlameThrower(gentity_t *self)
-{
-		WP_StartFlameThrower(self);
-		WP_FireFlameThrower(self);
 }
