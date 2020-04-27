@@ -162,6 +162,7 @@ pml_t		pml;
 const float	pm_stopspeed = 100.0f;
 const float	pm_duckScale = 0.50f;
 const float	pm_swimScale = 0.50f;
+const float pm_heavyWeaponScale = 0.6f;
 float	pm_ladderScale = 0.7f;
 
 const float	pm_vehicleaccelerate = 36.0f;
@@ -3232,6 +3233,14 @@ static void PM_WalkMove( void ) {
 		if ( wishspeed > pm->ps->speed * pm_duckScale )
 		{
 			wishspeed = pm->ps->speed * pm_duckScale;
+		}
+	}
+	// clamp speed if imperial repeater or rocketlauncher is equipped (heavier than other weapons?), only if not ducking
+	else if (pm->ps->weapon == WP_REPEATER || pm->ps->weapon == WP_ROCKET_LAUNCHER)
+	{
+		if (wishspeed > pm->ps->speed * pm_heavyWeaponScale)
+		{
+			wishspeed = pm->ps->speed * pm_heavyWeaponScale;
 		}
 	}
 
@@ -8504,6 +8513,11 @@ static void PM_Footsteps( void )
 					{
 						PM_SetAnim(pm,SETANIM_LEGS,BOTH_RUN2,setAnimFlags);
 					}
+				}
+				else if (pm->ps->weapon == WP_REPEATER || pm->ps->weapon == WP_ROCKET_LAUNCHER)
+				{ // testing: when heavy weapons are equipped, force walking animation
+					bobmove = 0.35f;
+					PM_SetAnim(pm, SETANIM_LEGS, BOTH_WALK1, setAnimFlags);
 				}
 				else
 				{
