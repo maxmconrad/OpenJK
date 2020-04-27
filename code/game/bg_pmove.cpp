@@ -3236,7 +3236,8 @@ static void PM_WalkMove( void ) {
 		}
 	}
 	// clamp speed if imperial repeater or rocketlauncher is equipped (heavier than other weapons?), only if not ducking
-	else if (pm->ps->weapon == WP_REPEATER || pm->ps->weapon == WP_ROCKET_LAUNCHER)
+	else if ((pm->ps->clientNum < MAX_CLIENTS || PM_ControlledByPlayer())
+			&& (pm->ps->weapon == WP_REPEATER || pm->ps->weapon == WP_ROCKET_LAUNCHER))
 	{
 		if (wishspeed > pm->ps->speed * pm_heavyWeaponScale)
 		{
