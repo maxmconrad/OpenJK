@@ -14240,8 +14240,9 @@ static void PM_VehicleWeapon( void )
 }
 
 void PM_Gadgets(void) {
-	if (pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent))) // it's actually the player that wants to fire the flamethrower
-	{
+	if (pm->gent && (pm->gent->s.number < MAX_CLIENTS || G_ControlledByPlayer(pm->gent))
+		&& pm->gent->client->NPC_class == CLASS_BOBAFETT) 
+	{ // it's actually the player that wants to fire the flamethrower, and boba fett model is being used
 		if (cg.wantsToEnableFlamethrower && !cg.isFlamethrowerEnabled) // player isn't firing yet and wants to fire
 		{
 			pm->ps->torsoAnimTimer = 30000;
