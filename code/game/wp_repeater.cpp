@@ -160,6 +160,7 @@ void WP_FireRepeater( gentity_t *ent, qboolean alt_fire )
 	}
 	else
 	{
+		/*
 		if ( !(ent->client->ps.forcePowersActive&(1<<FP_SEE))
 			|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2 )
 		{//force sight 2+ gives perfect aim
@@ -181,6 +182,7 @@ void WP_FireRepeater( gentity_t *ent, qboolean alt_fire )
 				angs[YAW]	+= Q_flrand(-1.0f, 1.0f) * REPEATER_SPREAD;
 			}
 		}
+		*/
 
 		AngleVectors( angs, dir, NULL, NULL );
 

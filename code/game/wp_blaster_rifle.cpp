@@ -57,6 +57,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 		}
 		else
 		{
+			/*
 			// Troopers use their aim values as well as the gun's inherent inaccuracy
 			// so check for all classes of stormtroopers and anyone else that has aim error
 			if (ent->client && ent->NPC &&
@@ -72,6 +73,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
 				angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
 			}
+			*/
 		}
 	}
 
@@ -85,6 +87,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 	}
 	else
 	{
+		/*
 		// If an enemy is shooting at us, lower the velocity so you have a chance to evade
 		if ( ent->client && ent->client->ps.clientNum != 0 && ent->client->NPC_class != CLASS_BOBAFETT )
 		{
@@ -97,6 +100,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 				velocity *= BLASTER_NPC_HARD_VEL_CUT;
 			}
 		}
+		*/
 	}
 
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
