@@ -177,16 +177,18 @@ void WP_FireRepeater( gentity_t *ent, qboolean alt_fire )
 			}
 			else
 			{
+			*/
 				// add some slop to the alt-fire direction
 				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * REPEATER_SPREAD;
 				angs[YAW]	+= Q_flrand(-1.0f, 1.0f) * REPEATER_SPREAD;
+			/*
 			}
-		}
-		*/
+			*/
+	}
 
 		AngleVectors( angs, dir, NULL, NULL );
 
 		// FIXME: if temp_org does not have clear trace to inside the bbox, don't shoot!
 		WP_RepeaterMainFire( ent, dir );
-	}
+	//}
 }
