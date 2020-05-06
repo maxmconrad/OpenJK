@@ -166,7 +166,11 @@ void WP_BlasterMainFire(gentity_t* ent, qboolean alt_fire)
 
 void WP_BlasterAltFire(gentity_t* ent, qboolean alt_fire)
 {
-	WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+	vec3_t		eyeposVec;
+	// alt-fire from scope
+	VectorCopy(ent->client->renderInfo.eyePoint, eyeposVec);
+	AngleVectors(ent->client->renderInfo.eyeAngles, forwardVec, NULL, NULL);
+	WP_FireBlasterMissile(ent, eyeposVec, forwardVec, alt_fire);
 }
 
 //---------------------------------------------------------

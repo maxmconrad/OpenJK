@@ -2353,9 +2353,15 @@ static void CG_DrawZoomMask( void )
 	//---------------------------
 	else if (cg.zoomMode == 5)
 	{
-	// Draw target mask
-	cgi_R_SetColor(colorTable[CT_WHITE]);
-	CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
+		// Draw target mask
+		cgi_R_SetColor(colorTable[CT_WHITE]);
+		CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
+	}
+	else if (cg.zoomMode == 6)
+	{
+		// Draw target mask
+		cgi_R_SetColor(colorTable[CT_WHITE]);
+		CG_DrawPic(0, 0, 640, 480, cgs.media.dl44Mask);
 	}
 }
 
@@ -3262,7 +3268,7 @@ static qboolean CG_ShouldDrawCrosshairZoomed(void)
 	// E-11 small zoom, display crosshair
 	else if (cg.zoomMode == 6)
 	{
-		return qtrue;
+		return qfalse;
 	}
 	else
 	{

@@ -404,6 +404,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 //		cgs.effects.blasterOverchargeEffect		= theFxScheduler.RegisterEffect( "blaster/overcharge" );
 		cgs.effects.blasterWallImpactEffect		= theFxScheduler.RegisterEffect( "blaster/wall_impact" );
 		cgs.effects.blasterFleshImpactEffect	= theFxScheduler.RegisterEffect( "blaster/flesh_impact" );
+		cgs.media.e11Mask = cgi_R_RegisterShader("gfx/2d/dl44/cropCircle2");
 		theFxScheduler.RegisterEffect( "blaster/deflect" );
 		theFxScheduler.RegisterEffect( "blaster/smoke_bolton" ); // note: this will be called game side
 		break;

@@ -216,6 +216,9 @@ typedef struct {
 	// DL-44 blaster pistol zoom graphic
 	qhandle_t	dl44Mask;
 
+	// E-11 zoom graphics
+	qhandle_t	e11Mask;
+
 	// wall mark shaders
 	qhandle_t	scavMarkShader;
 	qhandle_t	rivetMarkShader;
