@@ -255,7 +255,7 @@ typedef struct ammoData_s
 // DEMP2
 //----------
 #define	DEMP2_DAMAGE				15
-#define	DEMP2_VELOCITY				1800
+#define	DEMP2_VELOCITY				2400*3 // 7200 orig:1800
 #define	DEMP2_NPC_DAMAGE_EASY		6
 #define	DEMP2_NPC_DAMAGE_NORMAL		12
 #define	DEMP2_NPC_DAMAGE_HARD		18
