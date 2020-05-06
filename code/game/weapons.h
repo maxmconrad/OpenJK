@@ -168,7 +168,7 @@ typedef struct ammoData_s
 
 // Bryar Pistol
 //--------
-#define BRYAR_PISTOL_VEL			3000 // 2600
+#define BRYAR_PISTOL_VEL			3000*3 // 2600
 #define BRYAR_PISTOL_DAMAGE			40 //20
 #define BRYAR_CHARGE_UNIT			200.0f	// bryar charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
 #define BRYAR_ZOOM_FOV				62.0f
@@ -179,7 +179,7 @@ typedef struct ammoData_s
 //#define BLASTER_ALT_SPREAD			0.5 //1.5f
 #define BLASTER_ALT_SPREAD			0.13f
 #define BLASTER_NPC_SPREAD			0.5f
-#define BLASTER_VELOCITY			2300
+#define BLASTER_VELOCITY			2300*3
 #define BLASTER_NPC_VEL_CUT			0.5f
 #define BLASTER_NPC_HARD_VEL_CUT	0.7f
 #define BLASTER_DAMAGE				30 //25
@@ -219,7 +219,7 @@ typedef struct ammoData_s
 //#define BOWCASTER_CHARGE_UNIT		200.0f	// bowcaster charging gives us one more unit every 200ms--if you change this, you'll have to do the same in bg_pmove
 
 #define	BOWCASTER_DAMAGE			80 //60
-#define	BOWCASTER_VELOCITY			5000 // 4000
+#define	BOWCASTER_VELOCITY			4000*2 //5000 // 4000
 #define	BOWCASTER_NPC_DAMAGE_EASY	12
 #define	BOWCASTER_NPC_DAMAGE_NORMAL	24
 #define	BOWCASTER_NPC_DAMAGE_HARD	36
@@ -238,7 +238,7 @@ typedef struct ammoData_s
 #define REPEATER_SPREAD				0.4f//1.4f
 #define REPEATER_NPC_SPREAD			0.3f//0.7f
 #define	REPEATER_DAMAGE				12//8
-#define	REPEATER_VELOCITY			2400//1600
+#define	REPEATER_VELOCITY			2400*3//1600
 #define	REPEATER_NPC_DAMAGE_EASY	2
 #define	REPEATER_NPC_DAMAGE_NORMAL	4
 #define	REPEATER_NPC_DAMAGE_HARD	6
