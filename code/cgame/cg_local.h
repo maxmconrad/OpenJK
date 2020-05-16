@@ -425,6 +425,9 @@ typedef struct {
 	int			crosshairClientNum;		//who you're looking at
 	int			crosshairClientTime;	//last time you looked at them
 
+	// Testing: position in world space player is aiming the crosshair at
+	vec3_t		crosshairAimPos;
+
 	// powerup active flashing
 	int			powerupActive;
 	int			powerupTime;

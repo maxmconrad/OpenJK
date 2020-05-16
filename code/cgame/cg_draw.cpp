@@ -41,6 +41,7 @@ void CG_DrawForceSelect( void );
 qboolean CG_WorldCoordToScreenCoord(vec3_t worldCoord, int *x, int *y);
 qboolean CG_WorldCoordToScreenCoordFloat(vec3_t worldCoord, float *x, float *y);
 
+static void CG_SetStaticCrosshairAimPos(void);
 qboolean CG_ShouldDrawCrosshairZoomed(void);
 
 extern float g_crosshairEntDist;
@@ -3212,6 +3213,12 @@ static void CG_DrawCrosshairNames( void )
 		CG_ScanForCrosshairEntity( scanAll );
 		return;
 	}
+	else if (!cg_dynamicCrosshair.integer)
+	{
+		CG_SetStaticCrosshairAimPos();
+		CG_ScanForCrosshairEntity(scanAll);
+		return;
+	}
 
 	if ( !player->gent )
 	{
@@ -3226,6 +3233,36 @@ static void CG_DrawCrosshairNames( void )
 	// scan the known entities to see if the crosshair is sighted on one
 	// This is currently being called by the rocket tracking code, so we don't necessarily want to do duplicate traces :)
 	CG_ScanForCrosshairEntity( scanAll );
+}
+
+extern void CG_DrawEdge(vec3_t start, vec3_t end, int type);
+extern void CG_DrawNode(vec3_t origin, int type);
+
+/*
+============================
+CG_SetStaticCrosshairAimPos
+When using "cg_dynamiccrosshair 0", save world position in cg.crosshairAimPos for later usage
+============================
+*/
+static void CG_SetStaticCrosshairAimPos(void) {
+	trace_t		trace;
+	vec3_t		start, end;
+	vec3_t		d_f, d_rt, d_up;
+	int			ignoreEnt = cg.snap->ps.clientNum;
+
+	if (cg_entities[0].gent && cg_entities[0].gent->client)
+	{ // only do this for player ?!
+		VectorCopy(cg.refdef.vieworg, start); // camera origin
+		AngleVectors(cg_entities[0].lerpAngles, d_f, d_rt, d_up);
+		VectorMA(start, 8192, d_f, end); //8192: length of raytrace
+
+		gi.trace(&trace, start, vec3_origin, vec3_origin, end, ignoreEnt, MASK_SHOT, G2_COLLIDE, 10); //send ray trace from camera origin
+
+		//CG_DrawNode(trace.endpos, NODE_NORMAL);
+		CG_DrawCrosshair(NULL);
+
+		VectorCopy(trace.endpos, cg.crosshairAimPos);
+	}
 }
 
 /*

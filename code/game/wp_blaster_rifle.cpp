@@ -39,8 +39,10 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 	int	damage		= alt_fire ? weaponData[WP_BLASTER].altDamage : weaponData[WP_BLASTER].damage;
 	vec3_t	angs;
 
+	
 	// fudge up npc aim
-	vectoangles(forwardVec, angs);
+	//vectoangles(forwardVec, angs);
+	vectoangles(dir, angs);
 
 	if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
 	{//no inherent aim screw up
@@ -70,9 +72,9 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 			else
 			{
 			*/
-				// add some slop to the main-fire direction
-				angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-				angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+			// add some slop to the main-fire direction
+			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
 			/*
 			}
 			*/
@@ -80,7 +82,8 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 	}
 
 	AngleVectors(angs, dir, NULL, NULL);
-
+	
+	
 	//NPCs have really slow projectiles it seems
 	if ( ent && ent->client && ent->client->NPC_class == CLASS_VEHICLE )
 	{
@@ -161,7 +164,18 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 void WP_BlasterMainFire(gentity_t* ent, qboolean alt_fire)
 //--------------------------------------------------------
 {
-	WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+	vec3_t dir;
+	if (!ent->s.number)
+	{
+		//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+		VectorSubtract(crosshairAimPos, muzzle, dir);
+		VectorNormalize(dir);
+		WP_FireBlasterMissile(ent, muzzle, dir, alt_fire);
+	}
+	else
+	{
+		WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+	}
 }
 
 void WP_BlasterAltFire(gentity_t* ent, qboolean alt_fire)

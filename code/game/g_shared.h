@@ -991,6 +991,8 @@ struct gentity_s {
 	vec3_t		currentOrigin;
 	vec3_t		currentAngles;
 
+	vec3_t		crosshairAimPos;
+
 	gentity_t	*owner;				// objects never interact with their owners, to
 									// prevent player missiles from immediately
 									// colliding with their owner

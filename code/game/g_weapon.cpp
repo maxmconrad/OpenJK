@@ -35,6 +35,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 vec3_t	forwardVec, vrightVec, up;
 vec3_t	muzzle;
+vec3_t	crosshairAimPos;
 
 gentity_t *ent_list[MAX_GENTITIES];
 extern cvar_t	*g_debugMelee;
@@ -1192,6 +1193,12 @@ void FireWeapon( gentity_t *ent, qboolean alt_fire )
 
 	// track shots taken for accuracy tracking.
 	ent->client->ps.persistant[PERS_ACCURACY_SHOTS]++;
+
+	// set crosshairAimPos for player, reworked "cg_dynamiccrosshair 0" behaviour
+	if (!ent->s.number && !cg_dynamicCrosshair.integer) {
+		//Com_Printf("crosshairAimPosX,Y,Z: %f,%f,%f\n ", cg.crosshairAimPos[0], cg.crosshairAimPos[1], cg.crosshairAimPos[2]);
+		VectorCopy(cg.crosshairAimPos, crosshairAimPos);
+	}
 
 	// If this is a vehicle, fire it's weapon and we're done.
 	if ( ent && ent->client && ent->client->NPC_class == CLASS_VEHICLE )
