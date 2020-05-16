@@ -123,10 +123,22 @@ void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 //----------------------------------------------------------
 {
 	vec3_t		eyeposVec;
+	vec3_t		dir;
 
 	if (!alt_fire) // main-fire from hip
 	{
-		WP_FireBryarPistolMissile(ent, muzzle, forwardVec, alt_fire);
+		if (!ent->s.number) // proper crosshair aim for player
+		{
+			//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+			VectorSubtract(crosshairAimPos, muzzle, dir);
+			VectorNormalize(dir);
+			WP_FireBryarPistolMissile(ent, muzzle, dir, alt_fire);
+		}
+		else
+		{
+			WP_FireBryarPistolMissile(ent, muzzle, forwardVec, alt_fire);
+		}
+		//WP_FireBryarPistolMissile(ent, muzzle, forwardVec, alt_fire);
 	}
 	else // alt-fire from scope/eye
 	{
