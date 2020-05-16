@@ -34,6 +34,7 @@ bool WP_MissileTargetHint(gentity_t* shooter, vec3_t start, vec3_t out);
 void drop_charge(gentity_t *ent, vec3_t start, vec3_t dir);
 void ViewHeightFix( const gentity_t * const ent );
 qboolean LogAccuracyHit( gentity_t *target, gentity_t *attacker );
+void WP_CalcSpread(const gentity_t* ent, vec3_t projectileVec, const qboolean alt_fire);
 extern qboolean G_BoxInBounds( const vec3_t point, const vec3_t mins, const vec3_t maxs, const vec3_t boundsMins, const vec3_t boundsMaxs );
 extern qboolean Jedi_DodgeEvasion( gentity_t *self, gentity_t *shooter, trace_t *tr, int hitLoc );
 extern qboolean PM_DroidMelee( int npc_class );

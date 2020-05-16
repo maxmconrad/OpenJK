@@ -39,50 +39,7 @@ void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean a
 	int	damage		= alt_fire ? weaponData[WP_BLASTER].altDamage : weaponData[WP_BLASTER].damage;
 	vec3_t	angs;
 
-	
-	// fudge up npc aim
-	//vectoangles(forwardVec, angs);
-	vectoangles(dir, angs);
-
-	if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
-	{//no inherent aim screw up
-	}
-	else if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
-		|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
-	{//force sight 2+ gives perfect aim
-		//FIXME: maybe force sight level 3 autoaims some?
-		if (alt_fire)
-		{
-			// add some slop to the alt-fire direction
-			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
-			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
-		}
-		else
-		{
-			/*
-			// Troopers use their aim values as well as the gun's inherent inaccuracy
-			// so check for all classes of stormtroopers and anyone else that has aim error
-			if (ent->client && ent->NPC &&
-				(ent->client->NPC_class == CLASS_STORMTROOPER ||
-					ent->client->NPC_class == CLASS_SWAMPTROOPER))
-			{
-				angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-				angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-			}
-			else
-			{
-			*/
-			// add some slop to the main-fire direction
-			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-			angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-			/*
-			}
-			*/
-		}
-	}
-
-	AngleVectors(angs, dir, NULL, NULL);
-	
+	WP_CalcSpread(ent, dir, alt_fire);
 	
 	//NPCs have really slow projectiles it seems
 	if ( ent && ent->client && ent->client->NPC_class == CLASS_VEHICLE )
