@@ -3335,6 +3335,17 @@ static void PM_WalkMove( void ) {
 		PM_StepSlideMove( 0 );
 	}
 
+	// set new walking flag
+	if (pm->cmd.buttons & BUTTON_WALKING)
+	{
+		//Com_Printf("Walking.\n");
+		pm->ps->pm_flags |= PMF_WALKING;
+	}
+	else
+	{
+		//Com_Printf("Not walking.\n");
+		pm->ps->pm_flags &= ~PMF_WALKING;
+	}
 	//Com_Printf("velocity2 = %1.1f\n", VectorLength(pm->ps->velocity));
 
 }
