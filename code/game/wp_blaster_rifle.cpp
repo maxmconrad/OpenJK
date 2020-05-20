@@ -122,7 +122,7 @@ void WP_BlasterMainFire(gentity_t* ent, qboolean alt_fire)
 //--------------------------------------------------------
 {
 	vec3_t dir;
-	if (!ent->s.number)
+	if (!ent->s.number && isUsingStaticCrosshair)
 	{
 		//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
 		VectorSubtract(crosshairAimPos, muzzle, dir);

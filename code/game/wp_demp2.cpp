@@ -30,31 +30,29 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 //	DEMP2
 //-------------------
 
-//---------------------------------------------------------
-static void WP_DEMP2_MainFire( gentity_t *ent )
-//---------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+static void WP_FireDEMP2MainMissile(gentity_t* ent, vec3_t start, vec3_t dir)
+//----------------------------------------------------------------------------------------------
 {
-	vec3_t	start;
-	int		damage	= weaponData[WP_DEMP2].damage;
+	int		damage = weaponData[WP_DEMP2].damage;
 
-	VectorCopy( muzzle, start );
-	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
+	WP_TraceSetStart(ent, start, vec3_origin, vec3_origin);//make sure our start point isn't on the other side of a wall
 
-	WP_MissileTargetHint(ent, start, forwardVec);
+	WP_MissileTargetHint(ent, start, dir);
 
-	gentity_t *missile = CreateMissile( start, forwardVec, DEMP2_VELOCITY, 10000, ent );
+	gentity_t* missile = CreateMissile(start, dir, DEMP2_VELOCITY, 10000, ent);
 
 	missile->classname = "demp2_proj";
 	missile->s.weapon = WP_DEMP2;
 
 	// Do the damages
-	if ( ent->s.number != 0 )
+	if (ent->s.number != 0)
 	{
-		if ( g_spskill->integer == 0 )
+		if (g_spskill->integer == 0)
 		{
 			damage = DEMP2_NPC_DAMAGE_EASY;
 		}
-		else if ( g_spskill->integer == 1 )
+		else if (g_spskill->integer == 1)
 		{
 			damage = DEMP2_NPC_DAMAGE_NORMAL;
 		}
@@ -64,15 +62,15 @@ static void WP_DEMP2_MainFire( gentity_t *ent )
 		}
 	}
 
-	VectorSet( missile->maxs, DEMP2_SIZE, DEMP2_SIZE, DEMP2_SIZE );
-	VectorScale( missile->maxs, -1, missile->mins );
+	VectorSet(missile->maxs, DEMP2_SIZE, DEMP2_SIZE, DEMP2_SIZE);
+	VectorScale(missile->maxs, -1, missile->mins);
 
-//	if ( ent->client && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > 0 && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > cg.time )
-//	{
-//		// in overcharge mode, so doing double damage
-//		missile->flags |= FL_OVERCHARGED;
-//		damage *= 2;
-//	}
+	//	if ( ent->client && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > 0 && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > cg.time )
+	//	{
+	//		// in overcharge mode, so doing double damage
+	//		missile->flags |= FL_OVERCHARGED;
+	//		damage *= 2;
+	//	}
 
 	missile->damage = damage;
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
@@ -81,6 +79,25 @@ static void WP_DEMP2_MainFire( gentity_t *ent )
 
 	// we don't want it to ever bounce
 	missile->bounceCount = 0;
+}
+
+//---------------------------------------------------------
+static void WP_DEMP2_MainFire( gentity_t *ent )
+//---------------------------------------------------------
+{
+	qboolean alt_fire = qfalse;
+	vec3_t dir;
+	if (!ent->s.number && isUsingStaticCrosshair)
+	{
+		//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+		VectorSubtract(crosshairAimPos, muzzle, dir);
+		VectorNormalize(dir);
+		WP_FireDEMP2MainMissile(ent, muzzle, dir);
+	}
+	else
+	{
+		WP_FireDEMP2MainMissile(ent, muzzle, forwardVec);
+	}
 }
 
 // NOTE: this is 100% for the demp2 alt-fire effect, so changes to the visual effect will affect game side demp2 code

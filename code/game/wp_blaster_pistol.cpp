@@ -40,30 +40,7 @@ void WP_FireBryarPistolMissile(gentity_t* ent, vec3_t start, vec3_t dir, qboolea
 	//VectorCopy(muzzle, start);
 	WP_TraceSetStart(ent, start, vec3_origin, vec3_origin);//make sure our start point isn't on the other side of a wall
 
-	if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
-		|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
-	{//force sight 2+ gives perfect aim
-		//FIXME: maybe force sight level 3 autoaims some?
-		if (ent->NPC && ent->NPC->currentAim < 5)
-		{
-			vec3_t	angs;
-
-			vectoangles(dir, angs);
-
-			if (ent->client->NPC_class == CLASS_IMPWORKER)
-			{//*sigh*, hack to make impworkers less accurate without affecteing imperial officer accuracy
-				angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-				angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-			}
-			else
-			{
-				angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * ((5 - ent->NPC->currentAim) * 0.25f));
-				angs[YAW] += (Q_flrand(-1.0f, 1.0f) * ((5 - ent->NPC->currentAim) * 0.25f));
-			}
-
-			AngleVectors(angs, dir, NULL, NULL);
-		}
-	}
+	WP_CalcSpread(ent, dir, alt_fire);
 
 	WP_MissileTargetHint(ent, start, dir);
 
@@ -127,7 +104,7 @@ void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 
 	if (!alt_fire) // main-fire from hip
 	{
-		if (!ent->s.number) // proper crosshair aim for player
+		if (!ent->s.number && isUsingStaticCrosshair) // proper crosshair aim for player
 		{
 			//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
 			VectorSubtract(crosshairAimPos, muzzle, dir);

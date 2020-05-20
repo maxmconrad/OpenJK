@@ -36,6 +36,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 vec3_t	forwardVec, vrightVec, up;
 vec3_t	muzzle;
 vec3_t	crosshairAimPos;
+qboolean	isUsingStaticCrosshair;
 
 gentity_t *ent_list[MAX_GENTITIES];
 extern cvar_t	*g_debugMelee;
@@ -454,9 +455,32 @@ void WP_CalcSpread(const gentity_t* ent, vec3_t projectileVec, const qboolean al
 	case WP_BRYAR_PISTOL:
 		break;
 	case WP_BLASTER_PISTOL:
+		if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
+			|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
+		{//force sight 2+ gives perfect aim
+			//FIXME: maybe force sight level 3 autoaims some?
+			if (ent->NPC && ent->NPC->currentAim < 5)
+			{
+
+				vectoangles(projectileVec, angs);
+
+				if (ent->client->NPC_class == CLASS_IMPWORKER)
+				{//*sigh*, hack to make impworkers less accurate without affecteing imperial officer accuracy
+					angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+					angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+				}
+				else
+				{
+					angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * ((5 - ent->NPC->currentAim) * 0.25f));
+					angs[YAW] += (Q_flrand(-1.0f, 1.0f) * ((5 - ent->NPC->currentAim) * 0.25f));
+				}
+
+				AngleVectors(angs, projectileVec, NULL, NULL);
+			}
+		}
 		break;
 	case WP_BLASTER:
-		if (!(ent->client->ps.pm_flags & PMF_DUCKED))
+		if (!(ent->client->ps.pm_flags & PMF_DUCKED) && !(ent->client->ps.pm_flags & PMF_WALKING))
 		{
 			// fudge up npc aim
 			//vectoangles(forwardVec, angs);
@@ -505,6 +529,32 @@ void WP_CalcSpread(const gentity_t* ent, vec3_t projectileVec, const qboolean al
 	case WP_BOWCASTER:
 		break;
 	case WP_REPEATER:
+		vectoangles(projectileVec, angs);
+		/*
+		if ( !(ent->client->ps.forcePowersActive&(1<<FP_SEE))
+			|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2 )
+		{//force sight 2+ gives perfect aim
+			//FIXME: maybe force sight level 3 autoaims some?
+			// Troopers use their aim values as well as the gun's inherent inaccuracy
+			// so check for all classes of stormtroopers and anyone else that has aim error
+			if ( ent->client && ent->NPC &&
+				( ent->client->NPC_class == CLASS_STORMTROOPER ||
+				  ent->client->NPC_class == CLASS_SWAMPTROOPER ||
+				  ent->client->NPC_class == CLASS_SHADOWTROOPER ) )
+			{
+				angs[PITCH] += ( Q_flrand(-1.0f, 1.0f) * (REPEATER_NPC_SPREAD+(6-ent->NPC->currentAim)*0.25f) );
+				angs[YAW]	+= ( Q_flrand(-1.0f, 1.0f) * (REPEATER_NPC_SPREAD+(6-ent->NPC->currentAim)*0.25f) );
+			}
+			else
+			{
+			*/
+			// add some slop to the alt-fire direction
+			angs[PITCH] += Q_flrand(-1.0f, 1.0f) * REPEATER_SPREAD;
+			angs[YAW] += Q_flrand(-1.0f, 1.0f) * REPEATER_SPREAD;
+			/*
+			}
+			*/
+			AngleVectors(angs, projectileVec, NULL, NULL);
 		break;
 	case WP_FLECHETTE:
 		break;
@@ -1265,6 +1315,10 @@ void FireWeapon( gentity_t *ent, qboolean alt_fire )
 	if (!ent->s.number && !cg_dynamicCrosshair.integer) {
 		//Com_Printf("crosshairAimPosX,Y,Z: %f,%f,%f\n ", cg.crosshairAimPos[0], cg.crosshairAimPos[1], cg.crosshairAimPos[2]);
 		VectorCopy(cg.crosshairAimPos, crosshairAimPos);
+		isUsingStaticCrosshair = qtrue;
+	}
+	else {
+		isUsingStaticCrosshair = qfalse;
 	}
 
 	// If this is a vehicle, fire it's weapon and we're done.

@@ -107,7 +107,18 @@ void WP_BowcasterAltFire(gentity_t* ent, qboolean alt_fire)
 void WP_BowcasterMainFire(gentity_t *ent, qboolean alt_fire)
 //----------------------------------------------------------
 {
-	WP_FireBowcasterMissile(ent, muzzle, forwardVec, alt_fire);
+	vec3_t dir;
+	if (!ent->s.number && isUsingStaticCrosshair)
+	{
+		//WP_FireBlasterMissile(ent, muzzle, forwardVec, alt_fire);
+		VectorSubtract(crosshairAimPos, muzzle, dir);
+		VectorNormalize(dir);
+		WP_FireBowcasterMissile(ent, muzzle, dir, alt_fire);
+	}
+	else
+	{
+		WP_FireBowcasterMissile(ent, muzzle, forwardVec, alt_fire);
+	}
 }
 
 //---------------------------------------------------------
