@@ -3346,7 +3346,8 @@ static void PM_WalkMove( void ) {
 		//Com_Printf("Not walking.\n");
 		pm->ps->pm_flags &= ~PMF_WALKING;
 	}
-	//Com_Printf("velocity2 = %1.1f\n", VectorLength(pm->ps->velocity));
+	//Com_Printf("velocityX,Y,Z = %1.1f %1.1f %1.1f\n", pm->ps->velocity[0], pm->ps->velocity[1], pm->ps->velocity[2]);
+	//Com_Printf("velocity = %1.1f\n", VectorLength(pm->ps->velocity));
 
 }
 
