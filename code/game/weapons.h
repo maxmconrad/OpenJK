@@ -175,7 +175,7 @@ typedef struct ammoData_s
 
 // E11 Blaster
 //---------
-#define BLASTER_MAIN_SPREAD			0.5f //0.5f
+#define BLASTER_MAIN_SPREAD			0.6f //0.5f
 //#define BLASTER_ALT_SPREAD			0.5 //1.5f
 #define BLASTER_ALT_SPREAD			0.13f
 #define BLASTER_NPC_SPREAD			0.5f

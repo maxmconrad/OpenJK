@@ -480,51 +480,62 @@ void WP_CalcSpread(const gentity_t* ent, vec3_t projectileVec, const qboolean al
 		}
 		break;
 	case WP_BLASTER:
-		if (!(ent->client->ps.pm_flags & PMF_DUCKED) && !(ent->client->ps.pm_flags & PMF_WALKING))
-		{
-			// fudge up npc aim
-			//vectoangles(forwardVec, angs);
-			vectoangles(projectileVec, angs);
+		// fudge up aim
+		//vectoangles(forwardVec, angs);
+		vectoangles(projectileVec, angs);
 
-			if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
-			{//no inherent aim screw up
-			}
-			else if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
-				|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
-			{//force sight 2+ gives perfect aim
-				//FIXME: maybe force sight level 3 autoaims some?
-				if (alt_fire)
-				{
+		if (ent->client && ent->client->NPC_class == CLASS_VEHICLE)
+		{//no inherent aim screw up for vehicles
+		}
+		else if (!(ent->client->ps.forcePowersActive & (1 << FP_SEE))
+			|| ent->client->ps.forcePowerLevel[FP_SEE] < FORCE_LEVEL_2)
+		{//force sight 2+ gives perfect aim
+			//FIXME: maybe force sight level 3 autoaims some?
+			if (alt_fire)
+			{
+				if (VectorLength(ent->client->ps.velocity) > 180.0f)
+				{ //running, bad aim!
 					// add some slop to the alt-fire direction
 					angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
 					angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_ALT_SPREAD;
 				}
 				else
 				{
-					/*
-					// Troopers use their aim values as well as the gun's inherent inaccuracy
-					// so check for all classes of stormtroopers and anyone else that has aim error
-					if (ent->client && ent->NPC &&
-						(ent->client->NPC_class == CLASS_STORMTROOPER ||
-							ent->client->NPC_class == CLASS_SWAMPTROOPER))
-					{
-						angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-						angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
-					}
-					else
-					{
-					*/
-					// add some slop to the main-fire direction
-					angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-					angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
-					/*
-					}
-					*/
+					angs[PITCH] += Q_flrand(-1.0f, 1.0f) * (BLASTER_ALT_SPREAD/2);
+					angs[YAW] += Q_flrand(-1.0f, 1.0f) * (BLASTER_ALT_SPREAD/2);
 				}
 			}
+			else
+			{
+				/* FIXME: NPC aim?
+				// Troopers use their aim values as well as the gun's inherent inaccuracy
+				// so check for all classes of stormtroopers and anyone else that has aim error
+				if (ent->client && ent->NPC &&
+					(ent->client->NPC_class == CLASS_STORMTROOPER ||
+						ent->client->NPC_class == CLASS_SWAMPTROOPER))
+				{
+					angs[PITCH] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+					angs[YAW] += (Q_flrand(-1.0f, 1.0f) * (BLASTER_NPC_SPREAD + (6 - ent->NPC->currentAim) * 0.25f));//was 0.5f
+				}
+				else
+				{
+				}
+				*/
 
-			AngleVectors(angs, projectileVec, NULL, NULL);
+				// add some slop to the main-fire direction
+				if (VectorLength(ent->client->ps.velocity) > 180.0f)
+				{ //running, bad aim!
+					angs[PITCH] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+					angs[YAW] += Q_flrand(-1.0f, 1.0f) * BLASTER_MAIN_SPREAD;
+				}
+				else
+				{
+					angs[PITCH] += Q_flrand(-1.0f, 1.0f) * (BLASTER_MAIN_SPREAD*0.5f);
+					angs[YAW] += Q_flrand(-1.0f, 1.0f) * (BLASTER_MAIN_SPREAD*0.5f);
+				}
+			}
 		}
+		AngleVectors(angs, projectileVec, NULL, NULL);
 		break;
 	case WP_BOWCASTER:
 		break;
