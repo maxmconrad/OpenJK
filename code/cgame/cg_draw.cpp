@@ -2780,6 +2780,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 		y = cg_crosshairY.integer;
 	}
 
+	// default crosshair
 	if ( cg.snap->ps.viewEntity > 0 && cg.snap->ps.viewEntity < ENTITYNUM_WORLD )
 	{
 		if ( !Q_stricmp( "misc_panel_turret", g_entities[cg.snap->ps.viewEntity].classname ))
@@ -2790,6 +2791,17 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 				w * 2, h * 2, 0, 0, 1, 1, cgs.media.turretCrossHairShader );
 
 		}
+	}
+	else if (VectorLength(cg.snap->ps.velocity) > 180.0f)
+	{
+		w *= 1.5f;
+		h *= 1.5f;
+
+		hShader = cgs.media.crosshairShader[cg_drawCrosshair.integer % NUM_CROSSHAIRS];
+
+		cgi_R_DrawStretchPic(x + cg.refdef.x + 0.5 * (640 - w),
+			y + cg.refdef.y + 0.5 * (480 - h),
+			w, h, 0, 0, 1, 1, hShader);
 	}
 	else
 	{
@@ -3253,13 +3265,13 @@ static void CG_SetStaticCrosshairAimPos(void) {
 	if (cg_entities[0].gent && cg_entities[0].gent->client)
 	{ // only do this for player ?!
 		VectorCopy(cg.refdef.vieworg, start); // camera origin
-		AngleVectors(cg_entities[0].lerpAngles, d_f, d_rt, d_up);
-		VectorMA(start, 8192, d_f, end); //8192: length of raytrace
+		//AngleVectors(cg_entities[0].lerpAngles, d_f, d_rt, d_up);
+		VectorMA(start, 8192, cg.refdef.viewaxis[0], end); //8192: length of raytrace
 
 		gi.trace(&trace, start, vec3_origin, vec3_origin, end, ignoreEnt, MASK_SHOT, G2_COLLIDE, 10); //send ray trace from camera origin
 
 		//CG_DrawNode(trace.endpos, NODE_NORMAL);
-		CG_DrawCrosshair(NULL);
+		//CG_DrawCrosshair(NULL);
 
 		VectorCopy(trace.endpos, cg.crosshairAimPos);
 	}
